@@ -1,33 +1,38 @@
 export type SkillCluster = {
   title: string;
+  titleNo: string;
   description: string;
+  descriptionNo: string;
   skills: string[];
-  position: string;
 };
 
 export const skillClusters: SkillCluster[] = [
   {
     title: "AI / ML",
+    titleNo: "AI / ML",
     description: "Models, training loops, evaluation and practical inference.",
-    skills: ["PyTorch", "Scikit-learn", "Optimization", "Evaluation"],
-    position: "md:col-start-2"
+    descriptionNo: "Modeller, treningssløyfer, evaluering og praktisk inferens.",
+    skills: ["PyTorch", "Scikit-learn", "Optimization", "Evaluation"]
   },
   {
     title: "Robotics",
+    titleNo: "Robotikk",
     description: "Kinematics, planning, simulation and robot software architecture.",
-    skills: ["ROS 2", "Kinematics", "Path planning", "Simulation"],
-    position: "md:col-start-1"
+    descriptionNo: "Kinematikk, planlegging, simulering og robotprogramvare.",
+    skills: ["ROS 2", "Kinematics", "Path planning", "Simulation"]
   },
   {
     title: "Computer Vision",
+    titleNo: "Datasyn",
     description: "Image pipelines, feature extraction, detection and overlays.",
-    skills: ["OpenCV", "Detection", "Calibration", "Datasets"],
-    position: "md:col-start-3"
+    descriptionNo: "Bildebehandling, objektdeteksjon, kalibrering og datasett.",
+    skills: ["OpenCV", "Detection", "Calibration", "Datasets"]
   },
   {
     title: "Control / Embedded",
+    titleNo: "Regulering / embedded",
     description: "Control loops, sensors, hardware interfaces and practical constraints.",
-    skills: ["PID", "C++", "Microcontrollers", "Sensors"],
-    position: "md:col-start-2"
+    descriptionNo: "Regulering, sensorer, maskinvaregrensesnitt og sanntidssystemer.",
+    skills: ["PID", "C++", "Microcontrollers", "Sensors"]
   }
 ];

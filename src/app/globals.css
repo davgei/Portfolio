@@ -65,6 +65,15 @@ textarea {
   mask-image: linear-gradient(to bottom, black, transparent 85%);
 }
 
+@keyframes arm-target-pulse {
+  from { opacity: 0.9; stroke-width: 2; }
+  to { opacity: 0; stroke-width: 30; }
+}
+
+.arm-target-pulse {
+  animation: arm-target-pulse 700ms ease-out forwards;
+}
+
 .noise {
   position: fixed;
   inset: 0;
