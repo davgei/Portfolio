@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#050506"/>
+  <path d="M0 500C230 320 390 530 600 310S950 270 1200 110" fill="none" stroke="#d8a545" stroke-width="5" opacity=".55"/>
+  <g stroke="#ffffff" opacity=".08">
+    <path d="M100 0v630M260 0v630M420 0v630M580 0v630M740 0v630M900 0v630M1060 0v630"/>
+    <path d="M0 110h1200M0 230h1200M0 350h1200M0 470h1200"/>
+  </g>
+  <text x="90" y="260" fill="#efeee8" font-family="Inter, Arial, sans-serif" font-size="82" font-weight="700">Robotics Portfolio</text>
+  <text x="94" y="332" fill="#a8a59c" font-family="Inter, Arial, sans-serif" font-size="34">AI · Computer Vision · Autonomous Systems</text>
+  <circle cx="968" cy="360" r="88" fill="none" stroke="#8adce7" stroke-width="3" opacity=".55"/>
+  <circle cx="968" cy="360" r="12" fill="#d8a545"/>
+</svg>
