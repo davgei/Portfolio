@@ -11,7 +11,7 @@ export function RobotArm() {
   const springY = useSpring(pointerY, { stiffness: 90, damping: 24 });
   const shoulder = useTransform(springX, [0, 1], [-18, 22]);
   const elbow = useTransform(springY, [0, 1], [24, -28]);
-  const wrist = useTransform([springX, springY], ([x, y]) => (x - y) * 24);
+  const wrist = useTransform<number, number>([springX, springY], ([x, y]) => (x - y) * 24);
 
   useEffect(() => {
     const element = ref.current;

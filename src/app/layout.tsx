@@ -3,28 +3,29 @@ import "./globals.css";
 import { Providers } from "@/components/layout/providers";
 import { FloatingNav } from "@/components/navigation/floating-nav";
 import { CursorField } from "@/components/navigation/cursor-field";
+import { getBasePath } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://username.github.io/repository-name"),
+  metadataBase: new URL("https://davgei.github.io"),
   title: {
     default: "Robotics Portfolio",
     template: "%s | Robotics Portfolio"
   },
   description: "Interactive technical portfolio foundation for robotics, AI, computer vision and autonomous systems.",
   icons: {
-    icon: "/favicon.svg"
+    icon: `${getBasePath()}/favicon.svg`
   },
   openGraph: {
     title: "Robotics Portfolio",
     description: "Interactive technical portfolio foundation for robotics, AI and autonomous systems.",
     type: "website",
-    images: ["/images/social-preview-placeholder.svg"]
+    images: [`${getBasePath()}/images/social-preview-placeholder.svg`]
   },
   twitter: {
     card: "summary_large_image",
     title: "Robotics Portfolio",
     description: "Interactive technical portfolio foundation for robotics, AI and autonomous systems.",
-    images: ["/images/social-preview-placeholder.svg"]
+    images: [`${getBasePath()}/images/social-preview-placeholder.svg`]
   }
 };
 

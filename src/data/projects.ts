@@ -1,3 +1,5 @@
+import { getBasePath } from "@/lib/utils";
+
 export type ProjectArea = "AI" | "Robotics" | "Computer Vision" | "Control" | "Embedded" | "Hardware" | "Software";
 
 export type Project = {
@@ -31,7 +33,7 @@ export const projects: Project[] = [
     metric: "6-DOF concept",
     dates: "2026",
     featured: true,
-    image: "/images/projects/robot-arm.svg",
+    image: `${getBasePath()}/images/projects/robot-arm.svg`,
     links: {
       github: "https://github.com/username/adaptive-robot-arm"
     }
@@ -46,7 +48,7 @@ export const projects: Project[] = [
     metric: "Realtime-ready UI",
     dates: "2026",
     featured: true,
-    image: "/images/projects/vision-lab.svg",
+    image: `${getBasePath()}/images/projects/vision-lab.svg`,
     links: {
       github: "https://github.com/username/vision-lab"
     }
@@ -61,7 +63,7 @@ export const projects: Project[] = [
     metric: "Trajectory viewer",
     dates: "2026",
     featured: true,
-    image: "/images/projects/autonomous-paths.svg",
+    image: `${getBasePath()}/images/projects/autonomous-paths.svg`,
     links: {
       github: "https://github.com/username/autonomous-paths"
     }

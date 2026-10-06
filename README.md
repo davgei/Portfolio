@@ -109,6 +109,6 @@ Replace placeholders for:
 - timeline in `src/data/timeline.ts`
 - skills in `src/data/skills.ts`
 - PDF in `public/documents/`
-- `metadataBase` in `src/app/layout.tsx` before sharing publicly
+- `metadataBase` in `src/app/layout.tsx` if you move away from `davgei.github.io`
 
 The current content is intentionally concise foundation content, not a finished biography or CV.
