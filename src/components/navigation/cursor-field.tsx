@@ -11,7 +11,7 @@ export function CursorField() {
   const springY = useSpring(y, { stiffness: 420, damping: 38 });
 
   useEffect(() => {
-    if (!window.matchMedia("(pointer: fine)").matches) return;
+    if (!window.matchMedia("(pointer: fine)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const onMove = (event: PointerEvent) => {
       setVisible(true);
       x.set(event.clientX - 9);

@@ -5,27 +5,30 @@ import { FloatingNav } from "@/components/navigation/floating-nav";
 import { CursorField } from "@/components/navigation/cursor-field";
 import { getBasePath } from "@/lib/utils";
 
+const publicUrl = "https://davgei.github.io/Portfolio";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://davgei.github.io"),
+  metadataBase: new URL(publicUrl),
   title: {
-    default: "Robotics Portfolio",
-    template: "%s | Robotics Portfolio"
+    default: "David Geier | Robotics & Intelligent Systems",
+    template: "%s | David Geier"
   },
-  description: "Interactive technical portfolio foundation for robotics, AI, computer vision and autonomous systems.",
+  description: "David Geier studies robotics and intelligent systems at the University of Oslo. Selected work in perception, learning, control and hardware.",
+  alternates: { canonical: `${publicUrl}/` },
   icons: {
     icon: `${getBasePath()}/favicon.svg`
   },
   openGraph: {
-    title: "Robotics Portfolio",
-    description: "Interactive technical portfolio foundation for robotics, AI and autonomous systems.",
+    title: "David Geier | Robotics & Intelligent Systems",
+    description: "Selected work in perception, learning, control and hardware.",
     type: "website",
-    images: [`${getBasePath()}/images/social-preview-placeholder.svg`]
+    images: [{ url: `${publicUrl}/images/social-preview.png`, width: 1200, height: 630, alt: "David Geier robotics portfolio" }]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Robotics Portfolio",
-    description: "Interactive technical portfolio foundation for robotics, AI and autonomous systems.",
-    images: [`${getBasePath()}/images/social-preview-placeholder.svg`]
+    title: "David Geier | Robotics & Intelligent Systems",
+    description: "Selected work in perception, learning, control and hardware.",
+    images: [`${publicUrl}/images/social-preview.png`]
   }
 };
 

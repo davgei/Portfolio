@@ -4,35 +4,13 @@ export type SkillCluster = {
   description: string;
   descriptionNo: string;
   skills: string[];
+  projectSlug: string;
+  projectLabel: string;
 };
 
 export const skillClusters: SkillCluster[] = [
-  {
-    title: "AI / ML",
-    titleNo: "AI / ML",
-    description: "Models, training loops, evaluation and practical inference.",
-    descriptionNo: "Modeller, treningssløyfer, evaluering og praktisk inferens.",
-    skills: ["PyTorch", "Scikit-learn", "Optimization", "Evaluation"]
-  },
-  {
-    title: "Robotics",
-    titleNo: "Robotikk",
-    description: "Kinematics, planning, simulation and robot software architecture.",
-    descriptionNo: "Kinematikk, planlegging, simulering og robotprogramvare.",
-    skills: ["ROS 2", "Kinematics", "Path planning", "Simulation"]
-  },
-  {
-    title: "Computer Vision",
-    titleNo: "Datasyn",
-    description: "Image pipelines, feature extraction, detection and overlays.",
-    descriptionNo: "Bildebehandling, objektdeteksjon, kalibrering og datasett.",
-    skills: ["OpenCV", "Detection", "Calibration", "Datasets"]
-  },
-  {
-    title: "Control / Embedded",
-    titleNo: "Regulering / embedded",
-    description: "Control loops, sensors, hardware interfaces and practical constraints.",
-    descriptionNo: "Regulering, sensorer, maskinvaregrensesnitt og sanntidssystemer.",
-    skills: ["PID", "C++", "Microcontrollers", "Sensors"]
-  }
+  { title: "Perception", titleNo: "Persepsjon", description: "Image and spatial data are the starting point for a physical decision.", descriptionNo: "Bilder og romlige data er utgangspunktet for en fysisk beslutning.", skills: ["Computer vision", "2D detection", "Point clouds"], projectSlug: "waste-site-assessment", projectLabel: "REG / SITE ASSESSMENT" },
+  { title: "Learning", titleNo: "Læring", description: "Train policies and models, then inspect where and why their behavior changes.", descriptionNo: "Tren policyer og modeller, og undersøk hvor og hvorfor atferden endrer seg.", skills: ["PPO", "Reinforcement learning", "Model evaluation"], projectSlug: "ppo-autonomous-driving", projectLabel: "PPO / AUTONOMOUS DRIVING" },
+  { title: "Control", titleNo: "Regulering", description: "Connect a reference, robot state and feedback into a working loop.", descriptionNo: "Koble referanse, robottilstand og tilbakekobling i en fungerende sløyfe.", skills: ["ROS 2", "Joint states", "Feedback"], projectSlug: "ros2-robot-control", projectLabel: "ROS 2 / ROBOT CONTROL" },
+  { title: "Hardware", titleNo: "Maskinvare", description: "Make geometry, sensors and physical constraints part of the system design.", descriptionNo: "Ta med geometri, sensorer og fysiske begrensninger i systemdesignet.", skills: ["SolidWorks", "Assemblies", "Prototyping"], projectSlug: "mechatronic-prototyping", projectLabel: "CAD / MECHATRONICS" }
 ];

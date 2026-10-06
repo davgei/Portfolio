@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import Link from "next/link";
 import { Bone2D, Chain2D, V2 } from "ikts";
 import { skillClusters } from "@/data/skills";
 import { useLanguage } from "@/i18n/language-provider";
@@ -112,7 +113,7 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
       return { x: event.clientX - rect.left, y: event.clientY - rect.top };
     };
     const onPointerMove = (event: PointerEvent) => {
-      if (event.pointerType !== "touch" && performance.now() >= lockedUntil) aim(pointFromPointer(event));
+      if (!reducedMotion && event.pointerType !== "touch" && performance.now() >= lockedUntil) aim(pointFromPointer(event));
     };
     const onPointerDown = (event: PointerEvent) => {
       if (event.button === 0) aim(pointFromPointer(event), true);
@@ -143,13 +144,14 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
       schedule();
     });
     observer.observe(stage);
-    stage.addEventListener("pointermove", onPointerMove);
-    stage.addEventListener("pointerdown", onPointerDown);
+    const pointerSurface = isSkills ? stage : stage.closest<HTMLElement>(".hero") ?? stage;
+    pointerSurface.addEventListener("pointermove", onPointerMove);
+    pointerSurface.addEventListener("pointerdown", onPointerDown);
 
     return () => {
       observer.disconnect();
-      stage.removeEventListener("pointermove", onPointerMove);
-      stage.removeEventListener("pointerdown", onPointerDown);
+      pointerSurface.removeEventListener("pointermove", onPointerMove);
+      pointerSurface.removeEventListener("pointerdown", onPointerDown);
       cancelAnimationFrame(frameId);
       window.clearTimeout(pulseTimeout);
       aimRef.current = () => {};
@@ -191,13 +193,13 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
   const tipGap = pose ? Math.hypot(pose.target.x - pose.joints[3].x, pose.target.y - pose.joints[3].y) : 0;
 
   return (
-    <div className={isSkills ? "border border-line bg-panel/45" : "relative"}>
+    <div className={isSkills ? "border border-line bg-panel/45" : "relative h-full"}>
       <div
         ref={stageRef}
         tabIndex={0}
         onKeyDown={moveWithKeyboard}
         aria-label={language === "no" ? "Robotarm. Bruk piltastene for å flytte målet, Enter for å trykke." : "Robot arm. Use arrow keys to move the target and Enter to press."}
-        className={`relative isolate overflow-hidden bg-graphite/35 outline-none focus-visible:outline-amber ${isSkills ? "h-[680px] md:h-[610px]" : "h-[390px] rounded-lg border border-line shadow-glow sm:h-[500px]"}`}
+        className={`relative isolate overflow-hidden outline-none focus-visible:outline-amber ${isSkills ? "h-[680px] bg-graphite/35 md:h-[610px]" : "h-full min-h-[420px] bg-transparent"}`}
       >
         <div className="technical-grid pointer-events-none absolute inset-0" />
         {pose && (
@@ -257,7 +259,7 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
             </g>
           </svg>
         )}
-        <div className="pointer-events-none absolute bottom-4 left-4 z-30 flex gap-4 font-mono text-[11px] uppercase text-muted sm:bottom-6 sm:left-6">
+        <div className="arm-telemetry pointer-events-none absolute bottom-4 left-4 z-30 flex gap-4 font-mono text-[11px] uppercase text-muted sm:bottom-6 sm:left-6">
           <span>{language === "no" ? "Uttrekk" : "Extension"} {pose ? Math.round(pose.extension / pose.maxExtension * 100) : 0}%</span>
           <span className="text-amber">IK / 03</span>
         </div>
@@ -273,6 +275,7 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
             <div className="mt-4 flex flex-wrap gap-2">
               {activeSkill.skills.map((skill) => <span key={skill} className="border border-line px-2 py-1 font-mono text-xs text-mist">{skill}</span>)}
             </div>
+            <Link href={`/projects/${activeSkill.projectSlug}`} className="mt-5 inline-flex items-center gap-2 font-mono text-xs text-amber hover:text-mist">{activeSkill.projectLabel} <span aria-hidden="true">↗</span></Link>
           </div>
         </div>
       )}

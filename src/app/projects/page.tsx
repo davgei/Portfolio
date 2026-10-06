@@ -4,7 +4,7 @@ import { LocalizedPageHeading } from "@/components/layout/localized-page-heading
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Filterable project index for robotics, AI, computer vision, control, embedded and software work."
+  description: "Selected projects by David Geier across perception, reinforcement learning, robot control and mechatronics."
 };
 
 export default function ProjectsPage() {

@@ -1,114 +1,29 @@
-# Robotics Portfolio
+# David Geier Portfolio
 
-Interactive technical portfolio foundation for robotics, AI, computer vision, autonomous systems and software/hardware projects.
+An interactive, statically exported Next.js portfolio for robotics and intelligent systems. The site includes a three-joint inverse-kinematics arm with a telescopic final segment, project case studies, a technical system map, an experience path, an HTML CV, and English/Norwegian copy.
 
 ## Run locally
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open <http://localhost:3000>. Run `npm run build` to create the static site in `out/`.
 
-Build the static export:
+## Content
 
-```bash
-npm run build
-```
+- `src/data/projects.ts` is the editable project metadata and narrative source.
+- `src/data/skills.ts` maps technical areas to supporting projects.
+- `src/data/timeline.ts` contains confirmed and carefully qualified timeline entries.
+- `src/i18n/translations.ts` contains English and Norwegian interface copy.
+- `src/components/projects/project-visual.tsx` contains conceptual technical illustrations. These are labeled as concepts, not original project output.
+- `CONTENT_CHECKLIST.md` lists facts, media and links that need David's confirmation before publication.
 
-The static site is emitted to `out/`.
+Do not add unverified metrics, roles, dates, contact details or simulated training charts as if they were real results. Add public source links only when the repository is confirmed to be presentable. The CV is HTML-first; its print button uses the browser's save-to-PDF workflow. There is intentionally no placeholder PDF download.
 
-## Architecture
+## Deployment
 
-- `src/app/` contains App Router pages.
-- `src/components/` contains reusable UI, navigation, timeline, project and visualization components.
-- `src/data/projects.ts` contains shared project metadata.
-- `src/data/skills.ts` and `src/data/timeline.ts` contain editable structured content.
-- `src/i18n/translations.ts` contains English and Norwegian UI text.
-- `public/images/`, `public/videos/`, `public/sounds/` and `public/documents/` are the media folders.
+`.github/workflows/deploy.yml` builds and uploads the static export on pushes to `main`. The workflow sets `GITHUB_PAGES=true` and `GITHUB_PAGES_REPO=Portfolio`, which configure the correct `/Portfolio` base path. GitHub Pages must be enabled in the repository settings with **GitHub Actions** as the source.
 
-The visual system is defined in `tailwind.config.ts` and `src/app/globals.css`: dark technical base, warm amber accent, restrained cyan telemetry accents, fine borders, low-glow surfaces and fast ease-out motion.
-
-## Add a project
-
-1. Add metadata to `src/data/projects.ts`.
-2. Add a visual asset to `public/images/projects/`.
-3. If the project needs custom rich content, extend `src/components/projects/project-detail-content.tsx` or route the slug to a dedicated React component.
-
-The current detail page demonstrates reusable blocks for metrics, diagrams, charts and code snippets. Later, MDX can be added without changing the metadata model.
-
-## Languages
-
-English is the default language. Norwegian is available through the global `EN / NO` switch.
-
-Add new translated UI text in `src/i18n/translations.ts`, then read it through `useLanguage()`.
-
-The selected language is persisted in `localStorage`.
-
-## CV PDF
-
-Replace:
-
-```text
-public/documents/cv-placeholder.pdf
-```
-
-The CV page links to this file for open and download actions.
-
-## Audio
-
-Subtle UI sound is managed in `src/hooks/use-sound.tsx`.
-
-Sound never autoplays. It starts only after the user toggles sound on, persists the preference in `localStorage`, and respects reduced-motion preferences.
-
-Real audio assets can later be placed in `public/sounds/` if you prefer samples over generated tones.
-
-## Analytics
-
-Analytics is isolated in `src/lib/analytics.ts`.
-
-Set an ID with:
-
-```bash
-NEXT_PUBLIC_ANALYTICS_ID=your-id
-```
-
-No fake production ID is hard-coded. Replace `trackEvent()` with Plausible, Umami, Fathom or another static-site-friendly provider when ready.
-
-## GitHub Pages
-
-This project uses `output: "export"` in `next.config.ts`, so it is compatible with GitHub Pages.
-
-The workflow in `.github/workflows/deploy.yml` builds the site and deploys `out/`.
-
-For repository hosting at:
-
-```text
-https://username.github.io/repository-name/
-```
-
-the workflow sets:
-
-```bash
-GITHUB_PAGES=true
-GITHUB_PAGES_REPO=repository-name
-```
-
-That configures the correct `basePath` and `assetPrefix`.
-
-Before deployment, enable GitHub Pages in the repository settings and set the source to GitHub Actions.
-
-## Edit personal content
-
-Replace placeholders for:
-
-- name, degree and tagline in `src/i18n/translations.ts`
-- contact links in `src/components/layout/contact-section.tsx`
-- projects in `src/data/projects.ts`
-- timeline in `src/data/timeline.ts`
-- skills in `src/data/skills.ts`
-- PDF in `public/documents/`
-- `metadataBase` in `src/app/layout.tsx` if you move away from `davgei.github.io`
-
-The current content is intentionally concise foundation content, not a finished biography or CV.
+Sound is off by default and persists its preference. Language selection persists in local storage. Both work without a server-side session.

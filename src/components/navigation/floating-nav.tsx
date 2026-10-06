@@ -23,15 +23,15 @@ export function FloatingNav() {
   const { play } = useSound();
 
   return (
-    <header className="fixed inset-x-0 top-4 z-50 px-4">
+    <header className="site-nav fixed inset-x-0 top-4 z-50 px-4">
       <nav
-        aria-label="Primary navigation"
-        className="mx-auto flex w-fit max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full border border-line bg-ink/76 p-2 shadow-glow backdrop-blur-xl"
+        aria-label={t.common.language === "Språk" ? "Hovednavigasjon" : "Primary navigation"}
+        className="mx-auto flex w-fit max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full border border-line bg-ink/90 p-2 shadow-glow backdrop-blur-xl"
       >
         <div className="hidden items-center gap-1 sm:flex">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href.replace("#contact", ""));
+            const active = item.href === "/" ? pathname === "/" : item.key === "contact" ? false : pathname.startsWith(item.href);
             const label = t.nav[item.key];
 
             return (
@@ -56,21 +56,20 @@ export function FloatingNav() {
         </div>
 
         <div className="flex items-center gap-2 sm:hidden">
-          {navItems.slice(0, 4).map((item) => {
+          {navItems.map((item) => {
             const Icon = item.icon;
             const label = t.nav[item.key];
+            const active = item.href === "/" ? pathname === "/" : item.key === "contact" ? false : pathname.startsWith(item.href);
             return (
-              <Link key={item.href} href={item.href} className="grid size-9 place-items-center rounded-full text-muted" aria-label={label}>
+              <Link key={item.href} href={item.href} className={cn("grid size-9 place-items-center rounded-full text-muted", active && "bg-white/10 text-mist")} aria-label={label} title={label}>
                 <Icon size={17} />
               </Link>
             );
           })}
         </div>
 
-        <div className="h-8 w-px bg-line" />
-        <LanguageSwitch />
-        <SoundToggle />
       </nav>
+      <div className="nav-settings flex items-center gap-2"><LanguageSwitch /><SoundToggle /></div>
     </header>
   );
 }

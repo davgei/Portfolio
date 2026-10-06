@@ -4,6 +4,7 @@ const repositoryName = process.env.GITHUB_PAGES_REPO ?? "";
 const isGithubPages = process.env.GITHUB_PAGES === "true" && repositoryName.length > 0;
 
 const nextConfig: NextConfig = {
+  devIndicators: false,
   output: "export",
   trailingSlash: true,
   images: {

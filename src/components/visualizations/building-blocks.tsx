@@ -1,28 +1,11 @@
 export function MetricDisplay({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-lg border border-line bg-white/[0.035] p-5">
-      <div className="font-mono text-xs uppercase text-muted">{label}</div>
-      <div className="mt-3 text-2xl font-semibold text-mist">{value}</div>
-    </div>
-  );
+  return <div className="border-t border-line pt-4"><dt className="font-mono text-xs uppercase text-muted">{label}</dt><dd className="mt-2 text-2xl font-semibold text-mist">{value}</dd></div>;
 }
 
 export function CodeBlock({ code }: { code: string }) {
-  return (
-    <pre className="overflow-x-auto rounded-lg border border-line bg-ink p-5 text-sm text-mist">
-      <code>{code}</code>
-    </pre>
-  );
+  return <pre className="overflow-x-auto border border-line bg-ink p-5 text-sm text-mist"><code>{code}</code></pre>;
 }
 
-export function ArchitectureDiagram() {
-  return (
-    <div className="grid gap-3 rounded-lg border border-line bg-white/[0.03] p-5 sm:grid-cols-3">
-      {["Sensor input", "Inference / control", "Actuator output"].map((item) => (
-        <div key={item} className="rounded-lg border border-line bg-panel p-4 text-sm text-mist">
-          {item}
-        </div>
-      ))}
-    </div>
-  );
+export function ArchitectureDiagram({ stages }: { stages: string[] }) {
+  return <ol className="flex flex-wrap gap-3 border-y border-line py-5">{stages.map((stage, index) => <li key={`${index}-${stage}`} className="flex items-center gap-3 text-sm text-mist"><span className="font-mono text-xs text-amber">0{index + 1}</span>{stage}{index < stages.length - 1 && <span className="text-muted" aria-hidden="true">→</span>}</li>)}</ol>;
 }
