@@ -13,51 +13,57 @@ type SoundContextValue = {
 const SoundContext = createContext<SoundContextValue | null>(null);
 
 const tones: Record<SoundName, { frequency: number; duration: number; gain: number }> = {
-  select: { frequency: 740, duration: 0.045, gain: 0.018 },
-  navigate: { frequency: 440, duration: 0.065, gain: 0.022 },
-  confirm: { frequency: 920, duration: 0.055, gain: 0.02 }
+  select: { frequency: 740, duration: 0.11, gain: 0.075 },
+  navigate: { frequency: 440, duration: 0.14, gain: 0.07 },
+  confirm: { frequency: 920, duration: 0.18, gain: 0.085 }
 };
 
 export function SoundProvider({ children }: { children: React.ReactNode }) {
   const [enabled, setEnabled] = useState(false);
+  const enabledRef = useRef(false);
   const audioRef = useRef<AudioContext | null>(null);
+
+  const emit = useCallback((name: SoundName) => {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    const audio = audioRef.current ?? new AudioContextClass();
+    audioRef.current = audio;
+    if (audio.state === "suspended") void audio.resume();
+    const tone = tones[name];
+    const oscillator = audio.createOscillator();
+    const gain = audio.createGain();
+    const now = audio.currentTime;
+    oscillator.type = "triangle";
+    oscillator.frequency.setValueAtTime(tone.frequency, now);
+    oscillator.frequency.exponentialRampToValueAtTime(tone.frequency * 0.72, now + tone.duration);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(tone.gain, now + 0.018);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + tone.duration);
+    oscillator.connect(gain).connect(audio.destination);
+    oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
+    oscillator.start(now);
+    oscillator.stop(now + tone.duration);
+  }, []);
 
   useEffect(() => {
     const stored = window.localStorage.getItem("portfolio-sound");
-    if (stored === "on") setEnabled(true);
+    if (stored === "on") { enabledRef.current = true; setEnabled(true); }
   }, []);
 
   const toggle = useCallback(() => {
-    setEnabled((current) => {
-      const next = !current;
-      window.localStorage.setItem("portfolio-sound", next ? "on" : "off");
-      return next;
-    });
-  }, []);
+    const next = !enabledRef.current;
+    enabledRef.current = next;
+    setEnabled(next);
+    window.localStorage.setItem("portfolio-sound", next ? "on" : "off");
+    if (next) emit("confirm");
+    else if (audioRef.current?.state === "running") void audioRef.current.suspend();
+  }, [emit]);
 
   const play = useCallback(
     (name: SoundName) => {
-      if (!enabled || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContextClass) return;
-
-      const audio = audioRef.current ?? new AudioContextClass();
-      audioRef.current = audio;
-
-      const tone = tones[name];
-      const oscillator = audio.createOscillator();
-      const gain = audio.createGain();
-      oscillator.type = "sine";
-      oscillator.frequency.value = tone.frequency;
-      gain.gain.setValueAtTime(0, audio.currentTime);
-      gain.gain.linearRampToValueAtTime(tone.gain, audio.currentTime + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + tone.duration);
-      oscillator.connect(gain).connect(audio.destination);
-      oscillator.start();
-      oscillator.stop(audio.currentTime + tone.duration);
+      if (enabled) emit(name);
     },
-    [enabled]
+    [enabled, emit]
   );
 
   const value = useMemo(() => ({ enabled, toggle, play }), [enabled, play, toggle]);

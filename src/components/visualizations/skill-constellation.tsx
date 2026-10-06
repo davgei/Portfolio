@@ -7,9 +7,9 @@ export function SkillConstellation() {
   const { t } = useLanguage();
 
   return (
-    <section id="technical-areas" className="container-wide scroll-mt-24 section-block">
+    <section id="systems" className="container-wide scroll-mt-24 section-block">
       <div className="mb-10">
-        <p className="section-index">/ 02 · SYSTEMS</p>
+        <p className="section-index">/ 04 · SYSTEMS</p>
         <h2 className="mt-3 text-4xl font-semibold text-mist">{t.common.technicalAreas}</h2>
       </div>
       <RobotArm variant="skills" />

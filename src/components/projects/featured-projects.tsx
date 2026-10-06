@@ -11,7 +11,7 @@ export function FeaturedProjects() {
   return (
     <section id="projects" className="container-wide section-block">
       <div className="section-heading">
-        <div><p className="section-index">/ 01 · WORK</p><h2>{t.common.selectedProjects}</h2></div>
+        <div><p className="section-index">/ 03 · WORK</p><h2>{t.common.selectedProjects}</h2></div>
         <Link href="/projects" className="text-link">{t.common.overview}<ArrowRight size={17} /></Link>
       </div>
       <div className="featured-grid">

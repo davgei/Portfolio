@@ -54,7 +54,7 @@ export const projects: Project[] = [
     technologies: ["Computer vision", "2D detection", "Point clouds", "3D verification", "Web visualization"],
     stages: ["Capture", "2D detection", "3D verification", "Review", "Visualization"],
     stagesNo: ["Innsamling", "2D-deteksjon", "3D-verifisering", "Kontroll", "Visualisering"],
-    date: "2026", featured: true, accent: "gold"
+    date: "2026", featured: true, accent: "gold", github: "https://github.com/davgei/Internship-hovedprosjekt-2026"
   },
   {
     slug: "ppo-autonomous-driving", index: "02", title: "PPO autonomous driving", titleNo: "Autonom kjøring med PPO",

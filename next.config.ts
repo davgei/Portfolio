@@ -5,6 +5,7 @@ const isGithubPages = process.env.GITHUB_PAGES === "true" && repositoryName.leng
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  distDir: process.env.NODE_ENV === "development" ? ".next-dev" : ".next",
   output: "export",
   trailingSlash: true,
   images: {

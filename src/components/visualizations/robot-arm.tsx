@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Bone2D, Chain2D, V2 } from "ikts";
 import { skillClusters } from "@/data/skills";
 import { useLanguage } from "@/i18n/language-provider";
+import { useSound } from "@/hooks/use-sound";
 
 type Point = { x: number; y: number };
 type ArmPose = {
@@ -20,7 +21,7 @@ type Press = Point & { id: number };
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 const skillPositions = [
-  "md:left-[39%] md:top-[16%]",
+  "md:left-[5%] md:top-[16%]",
   "md:right-[5%] md:top-[16%]",
   "md:right-[5%] md:top-[48%]",
   "md:bottom-[8%] md:left-[43%]"
@@ -33,8 +34,12 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
   const [press, setPress] = useState<Press | null>(null);
   const [selected, setSelected] = useState(1);
   const { language } = useLanguage();
+  const { play } = useSound();
+  const playRef = useRef(play);
   const isSkills = variant === "skills";
   const activeSkill = skillClusters[selected];
+
+  useEffect(() => { playRef.current = play; }, [play]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -116,29 +121,29 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
       if (!reducedMotion && event.pointerType !== "touch" && performance.now() >= lockedUntil) aim(pointFromPointer(event));
     };
     const onPointerDown = (event: PointerEvent) => {
-      if (event.button === 0) aim(pointFromPointer(event), true);
+      if (event.button === 0) { aim(pointFromPointer(event), true); if (!isSkills) playRef.current("confirm"); }
     };
     const observer = new ResizeObserver(() => {
       const { width, height } = stage.getBoundingClientRect();
       if (width < 1 || height < 1) return;
       const compact = width < 680;
-      const scale = compact && isSkills ? Math.max(width, height * 0.63) : Math.max(width, height);
-      const base = new V2(width * (compact && isSkills ? 0.18 : isSkills ? 0.13 : 0.19), height * (isSkills ? 0.83 : 0.78));
+      const scale = isSkills ? (compact ? Math.max(width, height * 0.63) : Math.max(width, height)) : Math.max(height, width * 0.72);
+      const base = new V2(width * (compact && isSkills ? 0.18 : isSkills ? 0.13 : compact ? 0.18 : 0.64), height * (isSkills ? 0.83 : compact ? 0.78 : 0.12));
       geometry = {
         width, height,
         first: scale * 0.32,
         second: scale * 0.27,
         third: scale * 0.12,
-        maxExtension: compact && isSkills ? height * 0.33 : scale * 0.2
+        maxExtension: compact && isSkills ? height * 0.33 : scale * (isSkills ? 0.2 : 0.29)
       };
       chain = new Chain2D();
       chain.addBone(new Bone2D(base, undefined, new V2(0.6, -0.8), geometry.first));
-      chain.addConsecutiveBone(new V2(0.8, -0.6), geometry.second, 170, 170);
-      chain.addConsecutiveBone(new V2(1, 0), geometry.third, 170, 170);
+      chain.addConsecutiveBone(new V2(0.8, -0.6), geometry.second, 180, 180);
+      chain.addConsecutiveBone(new V2(1, 0), geometry.third, 180, 180);
       chain.setMaxIterationAttempts(20);
       desired = compact && isSkills
         ? { x: width * 0.72, y: height * 0.48 }
-        : { x: width * (isSkills ? 0.64 : 0.7), y: height * 0.31 };
+        : { x: width * (isSkills ? 0.64 : 0.8), y: height * (isSkills ? 0.31 : 0.62) };
       current = { ...desired };
       extension = 0;
       schedule();
@@ -158,7 +163,7 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
     };
   }, [isSkills]);
 
-  const aimAtButton = (button: HTMLButtonElement) => {
+  const aimAtButton = (button: HTMLElement, mark = true) => {
     const stage = stageRef.current;
     if (!stage) return;
     const stageRect = stage.getBoundingClientRect();
@@ -166,7 +171,7 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
     aimRef.current({
       x: buttonRect.left + buttonRect.width / 2 - stageRect.left,
       y: buttonRect.top + buttonRect.height / 2 - stageRect.top
-    }, true);
+    }, mark);
   };
   const moveWithKeyboard = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.target !== event.currentTarget || !pose) return;
@@ -203,7 +208,7 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
       >
         <div className="technical-grid pointer-events-none absolute inset-0" />
         {pose && (
-          <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox={`0 0 ${pose.width} ${pose.height}`} aria-hidden="true">
+          <svg className={`pointer-events-none absolute inset-0 h-full w-full ${isSkills ? "z-20" : ""}`} viewBox={`0 0 ${pose.width} ${pose.height}`} aria-hidden="true">
             <path d={`M 0 ${pose.joints[0].y + 28} H ${pose.width}`} stroke="#8adce7" strokeOpacity="0.13" strokeDasharray="5 12" />
             <circle cx={pose.joints[0].x} cy={pose.joints[0].y} r={Math.min(pose.width, pose.height) * 0.46} fill="none" stroke="#d8a545" strokeOpacity="0.09" strokeDasharray="4 12" />
             {pose.joints.slice(0, 2).map((point, index) => {
@@ -237,7 +242,8 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
                 key={cluster.title}
                 type="button"
                 aria-pressed={selected === index}
-                onClick={(event) => { setSelected(index); aimAtButton(event.currentTarget); }}
+                onClick={(event) => { setSelected(index); aimAtButton(event.currentTarget); play("select"); }}
+                onPointerEnter={(event) => { if (event.pointerType === "mouse") aimAtButton(event.currentTarget, false); }}
                 className={`relative min-h-[112px] cursor-pointer border text-left backdrop-blur-md transition-colors md:pointer-events-auto md:absolute md:min-h-[96px] md:w-[23%] ${skillPositions[index]} ${selected === index ? "border-amber bg-ink/95 text-mist" : "border-line bg-ink/85 text-muted hover:border-mist/60 hover:bg-ink/95"}`}
               >
                 <span className="absolute left-3 top-3 font-mono text-[11px] text-amber sm:left-4 sm:top-4">0{index + 1}</span>
