@@ -11,6 +11,7 @@ export function SkillConstellation() {
       <div className="mb-10">
         <p className="section-index">/ 04 · {language === "no" ? "I PRAKSIS" : "IN PRACTICE"}</p>
         <h2 className="mt-3 text-4xl font-semibold text-mist">{t.common.technicalAreas}</h2>
+        <p className="skill-section-intro">{language === "no" ? "Fra AI-arbeidet mitt hos Oslo kommune til autonom kjøring, robotstyring og fysiske prototyper." : "From my AI work with Oslo Municipality to autonomous driving, robot control and physical prototypes."}</p>
       </div>
       <RobotArm variant="skills" />
     </section>

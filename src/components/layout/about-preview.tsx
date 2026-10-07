@@ -18,7 +18,7 @@ export function AboutPreview() {
         </div>
         <div className="about-preview__copy">
           <p className="section-index">/ 02 · {no ? "OM MEG" : "ABOUT"}</p>
-          <h2>{no ? "Nysgjerrig på hele systemet." : "Curious about the whole system."}</h2>
+          <h2>{no ? "Det jeg liker å bygge, og hvorfor." : "What I like to build, and why."}</h2>
           <p>{no ? "Jeg studerer robotikk og intelligente systemer ved Universitetet i Oslo. Jeg liker å jobbe i skjæringspunktet mellom programvare, mekanikk og menneskene som faktisk skal bruke teknologien." : "I study robotics and intelligent systems at the University of Oslo. I like working where software, mechanics and the people who use technology meet."}</p>
           <p>{no ? "Utenfor studiene spiller jeg ishockey og i band, skrur på veteranbil og motorsykkel, og lager ting med 3D-printer, Arduino og Raspberry Pi." : "Outside university I play ice hockey and in a band, work on a classic car and motorcycle, and build things with 3D printers, Arduino and Raspberry Pi."}</p>
           <Link href="/about" className="about-preview__link">{no ? "Bli bedre kjent" : "Get to know me"}<ArrowUpRight size={18} /></Link>

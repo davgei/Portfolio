@@ -30,6 +30,7 @@ const skillPositions = [
 
 export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) {
   const stageRef = useRef<HTMLDivElement>(null);
+  const detailRef = useRef<HTMLDivElement>(null);
   const aimRef = useRef<(point: Point, press?: boolean) => void>(() => {});
   const [pose, setPose] = useState<ArmPose | null>(null);
   const [press, setPress] = useState<Press | null>(null);
@@ -132,10 +133,10 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
       const base = new V2(width * (compact && isSkills ? 0.18 : isSkills ? 0.13 : compact ? 0.73 : 0.64), height * (isSkills ? 0.83 : 0.12));
       geometry = {
         width, height,
-        first: scale * 0.23,
+        first: scale * 0.18,
         second: scale * 0.24,
         third: scale * 0.12,
-        maxExtension: compact && isSkills ? height * 0.42 : scale * (isSkills ? 0.34 : 0.39)
+        maxExtension: compact && isSkills ? height * 0.48 : scale * (isSkills ? 0.4 : 0.45)
       };
       chain = new Chain2D();
       chain.addBone(new Bone2D(base, undefined, isSkills ? new V2(0.6, -0.8) : new V2(0.45, 0.9), geometry.first, 85, 85));
@@ -145,8 +146,8 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
       chain.addConsecutiveBone(new V2(1, 0), geometry.third, 180, 180);
       chain.setMaxIterationAttempts(20);
       desired = compact && isSkills
-        ? { x: width * 0.75, y: 80 + 56 }
-        : { x: width * (isSkills ? 0.835 : 0.8), y: isSkills ? height * 0.16 + 48 : height * 0.62 };
+        ? { x: width * 0.88, y: 80 + 20 }
+        : { x: width * (isSkills ? 0.95 : 0.8) - (isSkills ? 18 : 0), y: isSkills ? height * 0.16 + 20 : height * 0.62 };
       current = { ...desired };
       extension = 0;
       schedule();
@@ -172,8 +173,8 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
     const stageRect = stage.getBoundingClientRect();
     const buttonRect = button.getBoundingClientRect();
     aimRef.current({
-      x: buttonRect.left + buttonRect.width / 2 - stageRect.left,
-      y: buttonRect.top + buttonRect.height / 2 - stageRect.top
+      x: buttonRect.right - 20 - stageRect.left,
+      y: buttonRect.top + 20 - stageRect.top
     }, mark);
   };
   const moveWithKeyboard = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -255,7 +256,12 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
                 type="button"
                 title={language === "no" ? `Vis ${cluster.titleNo}` : `Show ${cluster.title}`}
                 aria-pressed={selected === index}
-                onClick={(event) => { setSelected(index); aimAtButton(event.currentTarget); play("select"); }}
+                onClick={(event) => {
+                  setSelected(index);
+                  aimAtButton(event.currentTarget);
+                  play("select");
+                  requestAnimationFrame(() => detailRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }));
+                }}
                 onPointerEnter={(event) => { if (event.pointerType === "mouse") aimAtButton(event.currentTarget, false); }}
                 className={`relative min-h-[112px] cursor-pointer border text-left backdrop-blur-md transition-colors md:pointer-events-auto md:absolute md:min-h-[96px] md:w-[23%] ${skillPositions[index]} ${selected === index ? "border-amber bg-ink/95 text-mist" : "border-line bg-ink/85 text-muted hover:border-mist/60 hover:bg-ink/95"}`}
               >
@@ -285,13 +291,13 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
         </div>
       </div>
       {isSkills && (
-        <div className="grid gap-4 border-t border-line bg-ink/85 p-5 sm:p-7 md:grid-cols-[220px_1fr] md:gap-8" aria-live="polite">
+        <div ref={detailRef} className="skill-detail grid gap-4 p-5 sm:p-7 md:grid-cols-[245px_1fr] md:gap-8" aria-live="polite">
           <div>
-            <p className="font-mono text-xs text-amber">0{selected + 1} / 04</p>
+            <p className="font-mono text-xs text-amber">0{selected + 1} / 04 · {language === "no" ? "MIN ERFARING" : "MY EXPERIENCE"}</p>
             <h3 className="mt-2 text-xl font-semibold text-mist">{language === "no" ? activeSkill.titleNo : activeSkill.title}</h3>
           </div>
           <div>
-            <p className="max-w-2xl text-sm leading-6 text-muted">{language === "no" ? activeSkill.descriptionNo : activeSkill.description}</p>
+            <p className="skill-detail__description max-w-2xl">{language === "no" ? activeSkill.descriptionNo : activeSkill.description}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               {activeSkill.skills.map((skill) => <span key={skill} className="border border-line px-2 py-1 font-mono text-xs text-mist">{skill}</span>)}
             </div>

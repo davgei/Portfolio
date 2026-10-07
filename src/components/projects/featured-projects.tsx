@@ -15,7 +15,7 @@ export function FeaturedProjects() {
         <Link href="/projects" className="text-link">{t.common.overview}<ArrowRight size={17} /></Link>
       </div>
       <div className="featured-grid">
-        {projects.filter((project) => project.featured).map((project, index) => <ProjectCard key={project.slug} project={project} large={index === 0} />)}
+        {projects.filter((project) => project.featured).map((project) => <ProjectCard key={project.slug} project={project} />)}
       </div>
     </section>
   );

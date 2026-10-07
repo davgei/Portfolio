@@ -9,7 +9,6 @@ import { InteractiveTimeline } from "@/components/timeline/interactive-timeline"
 import { ContactSection } from "@/components/layout/contact-section";
 import { AboutPreview } from "@/components/layout/about-preview";
 import { SectionRail } from "@/components/navigation/section-rail";
-import { EdgeRover } from "@/components/navigation/edge-rover";
 import { useLanguage } from "@/i18n/language-provider";
 
 export default function Home() {
@@ -17,7 +16,6 @@ export default function Home() {
   return (
     <div className="home-page">
       <SectionRail />
-      <EdgeRover />
       <section id="top" className="hero" aria-labelledby="hero-title">
         <div className="hero-arm"><RobotArm /></div>
         <div className="container-wide hero-inner">

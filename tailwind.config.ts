@@ -11,7 +11,7 @@ const config: Config = {
         graphite: "#18181a",
         line: "rgba(255,255,255,0.12)",
         mist: "#efeee8",
-        muted: "#a8a59c",
+        muted: "#cbd5ce",
         amber: "#d8a545",
         copper: "#c66d3d",
         cyan: "#8adce7"

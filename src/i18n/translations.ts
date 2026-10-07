@@ -6,8 +6,8 @@ export const translations = {
   en: {
     nav: { home: "Home", projects: "Work", about: "About", cv: "CV", contact: "Contact" },
     common: {
-      exploreProjects: "Explore work", about: "About", contact: "Contact", selectedProjects: "Selected work",
-      technicalAreas: "Applied AI & physical systems", backgroundSignal: "Outside the lab", openProject: "View project",
+      exploreProjects: "Explore my work", about: "About", contact: "Contact", selectedProjects: "Projects I've worked on",
+      technicalAreas: "My experience with applied AI", backgroundSignal: "Outside the lab", openProject: "View project",
       filterByArea: "Filter by area", all: "All", soundOn: "Sound on", soundOff: "Sound off", language: "Language",
       viewGithub: "View GitHub", printCv: "Print / save PDF", nextProject: "Next project", overview: "All projects",
       projectContext: "The problem", projectContribution: "My contribution", projectApproach: "System approach",
@@ -19,11 +19,11 @@ export const translations = {
       status: "OSLO · AI / ROBOTICS · 2026", sequence: "AI  →  PERCEPTION  →  CONTROL  →  HARDWARE"
     },
     pages: {
-      projectsTitle: "Selected work", projectsIntro: "Robotics, intelligent systems and practical engineering across software and hardware.",
+      projectsTitle: "Projects I've worked on", projectsIntro: "A closer look at my work in AI, robotics, software and physical prototypes.",
       aboutTitle: "About David", aboutIntro: "I study robotics and intelligent systems at the University of Oslo, with a particular interest in the point where AI meets physical systems.",
       cvTitle: "Curriculum vitae", cvIntro: "A concise view of education, experience and selected technical work."
     },
-    contact: { title: "Let's connect", intro: "For projects, internships or a conversation about AI and robotics, reach me directly.", github: "GitHub / davgei" },
+    contact: { title: "Get in touch with me", intro: "For projects, internships or a conversation about AI and robotics, reach me directly.", github: "GitHub / davgei" },
     about: {
       statement: "I like engineering problems that end outside the screen.",
       body: "My work moves between sensing, machine learning, robot control and mechanical design. I am interested in how complete systems behave, from the first data point to the final physical action.",
@@ -36,8 +36,8 @@ export const translations = {
   no: {
     nav: { home: "Hjem", projects: "Arbeid", about: "Om", cv: "CV", contact: "Kontakt" },
     common: {
-      exploreProjects: "Utforsk arbeid", about: "Om", contact: "Kontakt", selectedProjects: "Utvalgt arbeid",
-      technicalAreas: "AI og fysiske systemer", backgroundSignal: "Utenfor laben", openProject: "Se prosjekt",
+      exploreProjects: "Se prosjektene mine", about: "Om", contact: "Kontakt", selectedProjects: "Prosjekter jeg har jobbet med",
+      technicalAreas: "Min erfaring med anvendt AI", backgroundSignal: "Utenfor laben", openProject: "Se prosjekt",
       filterByArea: "Filtrer etter område", all: "Alle", soundOn: "Lyd på", soundOff: "Lyd av", language: "Språk",
       viewGithub: "Se GitHub", printCv: "Skriv ut / lagre PDF", nextProject: "Neste prosjekt", overview: "Alle prosjekter",
       projectContext: "Utfordringen", projectContribution: "Mitt bidrag", projectApproach: "Systemtilnærming",
@@ -49,11 +49,11 @@ export const translations = {
       status: "OSLO · AI / ROBOTIKK · 2026", sequence: "AI  →  PERSEPSJON  →  REGULERING  →  MASKINVARE"
     },
     pages: {
-      projectsTitle: "Utvalgt arbeid", projectsIntro: "Robotikk, intelligente systemer og praktisk ingeniørarbeid på tvers av programvare og maskinvare.",
+      projectsTitle: "Prosjekter jeg har jobbet med", projectsIntro: "Et nærmere blikk på arbeidet mitt med AI, robotikk, programvare og fysiske prototyper.",
       aboutTitle: "Om David", aboutIntro: "Jeg studerer robotikk og intelligente systemer ved Universitetet i Oslo, med særlig interesse for møtet mellom AI og fysiske systemer.",
       cvTitle: "Curriculum vitae", cvIntro: "En kort oversikt over utdanning, erfaring og utvalgt teknisk arbeid."
     },
-    contact: { title: "Ta kontakt", intro: "For prosjekter, praksisplasser eller en prat om AI og robotikk kan du kontakte meg direkte.", github: "GitHub / davgei" },
+    contact: { title: "Ta kontakt med meg", intro: "For prosjekter, praksisplasser eller en prat om AI og robotikk kan du kontakte meg direkte.", github: "GitHub / davgei" },
     about: {
       statement: "Jeg liker tekniske problemer som ender utenfor skjermen.",
       body: "Arbeidet mitt beveger seg mellom sensorer, maskinlæring, robotregulering og mekanisk design. Jeg er interessert i hvordan hele systemer fungerer, fra første datapunkt til siste fysiske handling.",
