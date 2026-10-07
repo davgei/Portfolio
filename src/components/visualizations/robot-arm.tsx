@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import Link from "next/link";
-import { Info } from "lucide-react";
+import { Info, X } from "lucide-react";
 import { BaseboneConstraintType, Bone2D, Chain2D, V2 } from "ikts";
 import { skillClusters } from "@/data/skills";
 import { useLanguage } from "@/i18n/language-provider";
@@ -30,11 +30,12 @@ const skillPositions = [
 
 export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) {
   const stageRef = useRef<HTMLDivElement>(null);
-  const detailRef = useRef<HTMLDivElement>(null);
+  const detailRef = useRef<HTMLDialogElement>(null);
   const aimRef = useRef<(point: Point, press?: boolean) => void>(() => {});
   const [pose, setPose] = useState<ArmPose | null>(null);
   const [press, setPress] = useState<Press | null>(null);
   const [selected, setSelected] = useState(1);
+  const [detailOpen, setDetailOpen] = useState(false);
   const { language } = useLanguage();
   const { play } = useSound();
   const playRef = useRef(play);
@@ -42,6 +43,14 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
   const activeSkill = skillClusters[selected];
 
   useEffect(() => { playRef.current = play; }, [play]);
+
+  useEffect(() => {
+    if (!isSkills) return;
+    const dialog = detailRef.current;
+    if (!dialog) return;
+    if (detailOpen && !dialog.open) dialog.showModal();
+    if (!detailOpen && dialog.open) dialog.close();
+  }, [detailOpen, isSkills]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -259,11 +268,12 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
                 type="button"
                 title={language === "no" ? `Vis ${cluster.titleNo}` : `Show ${cluster.title}`}
                 aria-pressed={selected === index}
+                aria-haspopup="dialog"
                 onClick={(event) => {
                   setSelected(index);
+                  setDetailOpen(true);
                   aimAtButton(event.currentTarget);
                   play("select");
-                  requestAnimationFrame(() => detailRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }));
                 }}
                 onPointerEnter={(event) => { if (event.pointerType === "mouse") aimAtButton(event.currentTarget, false); }}
                 className={`relative min-h-[112px] cursor-pointer border text-left backdrop-blur-md transition-colors md:pointer-events-auto md:absolute md:min-h-[96px] md:w-[23%] ${skillPositions[index]} ${selected === index ? "border-amber bg-ink/95 text-mist" : "border-line bg-ink/85 text-muted hover:border-mist/60 hover:bg-ink/95"}`}
@@ -294,19 +304,26 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
         </div>
       </div>
       {isSkills && (
-        <div ref={detailRef} className="skill-detail grid gap-4 p-5 sm:p-7 md:grid-cols-[245px_1fr] md:gap-8" aria-live="polite">
-          <div>
-            <p className="font-mono text-xs text-amber">0{selected + 1} / 04 · {language === "no" ? "MIN ERFARING" : "MY EXPERIENCE"}</p>
-            <h3 className="mt-2 text-xl font-semibold text-mist">{language === "no" ? activeSkill.titleNo : activeSkill.title}</h3>
-          </div>
-          <div>
-            <p className="skill-detail__description max-w-2xl">{language === "no" ? activeSkill.descriptionNo : activeSkill.description}</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {activeSkill.skills.map((skill) => <span key={skill} className="border border-line px-2 py-1 font-mono text-xs text-mist">{skill}</span>)}
+        <dialog
+          ref={detailRef}
+          className="skill-dialog"
+          aria-labelledby="skill-dialog-title"
+          aria-describedby="skill-dialog-description"
+          onClose={() => setDetailOpen(false)}
+        >
+          <div className="skill-dialog__inner">
+            <header className="skill-dialog__header">
+              <p className="font-mono text-xs text-amber">0{selected + 1} / 04 · {language === "no" ? "MIN ERFARING" : "MY EXPERIENCE"}</p>
+              <button type="button" className="skill-dialog__close" aria-label={language === "no" ? "Lukk" : "Close"} onClick={() => setDetailOpen(false)}><X size={19} /></button>
+            </header>
+            <h2 id="skill-dialog-title">{language === "no" ? activeSkill.titleNo : activeSkill.title}</h2>
+            <p id="skill-dialog-description" className="skill-dialog__description">{language === "no" ? activeSkill.descriptionNo : activeSkill.description}</p>
+            <div className="skill-dialog__tags">
+              {activeSkill.skills.map((skill) => <span key={skill}>{skill}</span>)}
             </div>
-            <Link href={`/projects/${activeSkill.projectSlug}`} className="mt-5 inline-flex items-center gap-2 font-mono text-xs text-amber hover:text-mist">{activeSkill.projectLabel} <span aria-hidden="true">↗</span></Link>
+            <Link href={`/projects/${activeSkill.projectSlug}`} className="skill-dialog__link">{activeSkill.projectLabel} <span aria-hidden="true">↗</span></Link>
           </div>
-        </div>
+        </dialog>
       )}
     </div>
   );

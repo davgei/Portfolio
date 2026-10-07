@@ -515,9 +515,19 @@ main { overflow: clip; }
 .about-work-band { border-top: 1px solid rgba(255,255,255,.14); background: #151d1b; padding-block: 60px; }
 .about-work-band__inner { display: flex; justify-content: space-between; align-items: end; gap: 30px; }
 .skill-section-intro { max-width: 780px; margin: 17px 0 0; color: #d4dfd6; font-size: 17px; line-height: 1.65; }
-.skill-detail { border-top: 3px solid #e2b95e; background: #1b2b26; box-shadow: inset 0 10px 28px rgba(216,165,69,.09); scroll-margin-bottom: 90px; }
-.skill-detail h3 { font-size: 24px; line-height: 1.2; }
-.skill-detail__description { color: #ecf0e9; font-size: 17px; line-height: 1.7; }
+.skill-dialog { width: min(660px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 32px); margin: auto; border: 1px solid #8f7750; padding: 0; background: #111917; color: #f0f0ea; box-shadow: 0 28px 100px rgba(0,0,0,.68); }
+.skill-dialog::backdrop { background: rgba(2,4,4,.84); backdrop-filter: blur(5px); }
+.skill-dialog__inner { border-top: 3px solid #e2b95e; padding: clamp(24px, 5vw, 48px); }
+.skill-dialog__header { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.skill-dialog__header p { margin: 0; }
+.skill-dialog__close { display: grid; width: 40px; height: 40px; flex: none; place-items: center; border: 1px solid rgba(255,255,255,.2); background: #1b2421; color: #f0f0ea; cursor: pointer; }
+.skill-dialog__close:hover { border-color: #e2b95e; color: #f5d184; }
+.skill-dialog h2 { margin: 22px 0 16px; color: #f4f1e8; font-size: clamp(30px, 5vw, 46px); line-height: 1.12; }
+.skill-dialog__description { margin: 0; color: #e0e6de; font-size: 18px; line-height: 1.75; }
+.skill-dialog__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.skill-dialog__tags span { border: 1px solid rgba(255,255,255,.2); padding: 7px 10px; color: #f0f0ea; font: 12px/1.3 var(--font-ibm-plex-mono); }
+.skill-dialog__link { display: inline-flex; align-items: center; gap: 9px; margin-top: 27px; border-bottom: 1px solid #d8a545; padding: 0 0 8px; color: #edc66e; font: 600 12px/1.4 var(--font-ibm-plex-mono); }
+.skill-dialog__link:hover { color: #fff; }
 .hero-tagline, .project-card p, .case-chapter p, .timeline-detail p, .about-preview__copy > p:not(.section-index), .about-story__text p, .about-personal__inner > div:last-child p, .contact-section p:not(.section-index), .cv-entry p, .cv-skills, .about-hero__lower p { color: #d2ddd4; }
 @media (min-width: 1200px) { .home-page .container-wide { width: min(calc(100% - 250px),1560px); margin-left: max(210px, calc((100vw - 1560px)/2)); margin-right: auto; } }
 @media (max-width: 1199px) {
@@ -564,7 +574,8 @@ main { overflow: clip; }
   .timeline-dot { left: -7px; }
   .timeline-carriage { top: -15px; left: -46px; }
   .timeline-number { top: 11px; right: 10px; }
-  .skill-detail__description { font-size: 16px; }
+  .skill-dialog__inner { padding: 24px; }
+  .skill-dialog__description { font-size: 16px; }
 }
 
 /* Editorial project layouts keep the work and its explanation in the same view. */
