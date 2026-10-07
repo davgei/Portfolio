@@ -8,7 +8,7 @@ export const translations = {
     common: {
       exploreProjects: "Explore my work", about: "About", contact: "Contact", selectedProjects: "Projects I've worked on",
       technicalAreas: "My experience with applied AI", backgroundSignal: "Outside the lab", openProject: "View project",
-      filterByArea: "Filter by area", all: "All", soundOn: "Sound on", soundOff: "Sound off", language: "Language",
+      filterByArea: "Filter by area", all: "All", soundOn: "Mute sound", soundOff: "Enable sound", language: "Language",
       viewGithub: "View GitHub", printCv: "Print / save PDF", nextProject: "Next project", overview: "All projects",
       projectContext: "The problem", projectContribution: "My contribution", projectApproach: "System approach",
       projectOutcome: "Current result", projectNext: "What comes next", conceptual: "Conceptual system diagram"
@@ -38,7 +38,7 @@ export const translations = {
     common: {
       exploreProjects: "Se prosjektene mine", about: "Om", contact: "Kontakt", selectedProjects: "Prosjekter jeg har jobbet med",
       technicalAreas: "Min erfaring med anvendt AI", backgroundSignal: "Utenfor laben", openProject: "Se prosjekt",
-      filterByArea: "Filtrer etter område", all: "Alle", soundOn: "Lyd på", soundOff: "Lyd av", language: "Språk",
+      filterByArea: "Filtrer etter område", all: "Alle", soundOn: "Slå av lyd", soundOff: "Slå på lyd", language: "Språk",
       viewGithub: "Se GitHub", printCv: "Skriv ut / lagre PDF", nextProject: "Neste prosjekt", overview: "Alle prosjekter",
       projectContext: "Utfordringen", projectContribution: "Mitt bidrag", projectApproach: "Systemtilnærming",
       projectOutcome: "Nåværende resultat", projectNext: "Neste steg", conceptual: "Konseptuelt systemdiagram"

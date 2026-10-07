@@ -123,7 +123,10 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
       if (!reducedMotion && event.pointerType !== "touch" && performance.now() >= lockedUntil) aim(pointFromPointer(event));
     };
     const onPointerDown = (event: PointerEvent) => {
-      if (event.button === 0) { aim(pointFromPointer(event), true); if (!isSkills) playRef.current("confirm"); }
+      if (event.button === 0) {
+        aim(pointFromPointer(event), true);
+        if (!isSkills && !(event.target instanceof Element && event.target.closest("a, button"))) playRef.current("confirm");
+      }
     };
     const observer = new ResizeObserver(() => {
       const { width, height } = stage.getBoundingClientRect();

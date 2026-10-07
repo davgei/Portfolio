@@ -63,7 +63,7 @@ export function InteractiveTimeline() {
       const distance = Math.abs(coordinate - (vertical ? box.top + box.height / 2 : box.left + box.width / 2));
       return distance < best.distance ? { index, distance } : best;
     }, { index: activeRef.current, distance: Infinity }).index;
-    if (nearest !== activeRef.current) select(nearest);
+    if (nearest !== activeRef.current) { select(nearest); play("tick"); }
     if (vertical) targetY.set(clamp(event.clientY - rect.top, 15, Math.max(15, rect.height - 15)));
     else targetX.set(clamp(event.clientX - rect.left, 20, Math.max(20, rect.width - 20)));
   };
@@ -77,7 +77,7 @@ export function InteractiveTimeline() {
       <div className="timeline-machine">
         <div ref={trackRef} className="timeline-track" role="group" aria-label={language === "no" ? "Tidslinje" : "Timeline"}>
           <motion.div className="timeline-carriage" style={{ x: boundedX, y: boundedY }} aria-hidden="true"><span className="timeline-carriage__head" /><span className="timeline-carriage__pointer" /></motion.div>
-          {timelineItems.map((entry, index) => <button key={entry.id} type="button" aria-pressed={active === index} aria-controls="timeline-detail" onClick={(event) => { select(index, event.currentTarget); play("select"); }} onPointerEnter={(event) => { if (event.pointerType === "mouse") select(index, event.currentTarget); }} className={`timeline-point ${active === index ? "is-active" : ""}`}>
+          {timelineItems.map((entry, index) => <button key={entry.id} type="button" aria-pressed={active === index} aria-controls="timeline-detail" onClick={(event) => { select(index, event.currentTarget); play("select"); }} onPointerEnter={(event) => { if (event.pointerType === "mouse" && activeRef.current !== index) { select(index, event.currentTarget); play("tick"); } }} className={`timeline-point ${active === index ? "is-active" : ""}`}>
             <span className="timeline-dot" /><span className="timeline-number">0{index + 1} / 0{timelineItems.length}</span><span className="timeline-date">{language === "no" ? entry.dateNo ?? entry.date : entry.date}</span><strong>{language === "no" ? entry.titleNo : entry.title}</strong>
           </button>)}
         </div>
@@ -86,7 +86,7 @@ export function InteractiveTimeline() {
             <span className="section-index">0{index + 1} / 0{timelineItems.length} · {language === "no" ? entry.eyebrowNo : entry.eyebrow}</span>
             <h3>{language === "no" ? entry.titleNo : entry.title}</h3>
             <p>{language === "no" ? entry.descriptionNo : entry.description}</p>
-            {entry.href && <Link href={entry.href} className="text-link">{language === "no" ? "Se prosjekt" : "View project"}<ArrowUpRight size={17}/></Link>}
+            {entry.href && <Link href={entry.href} onClick={() => play("navigate")} className="text-link">{language === "no" ? "Se prosjekt" : "View project"}<ArrowUpRight size={17}/></Link>}
           </div>)}
         </div>
       </div>
