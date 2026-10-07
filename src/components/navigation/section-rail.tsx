@@ -8,51 +8,65 @@ const sections = [
   { id: "top", en: "Start", no: "Start" },
   { id: "about-preview", en: "About", no: "Om meg" },
   { id: "projects", en: "Work", no: "Prosjekter" },
-  { id: "systems", en: "Systems", no: "Systemer" },
-  { id: "timeline", en: "Path", no: "Tidslinje" },
-  { id: "contact", en: "Contact", no: "Kontakt" }
+  { id: "systems", en: "Practice", no: "Fagfelt" },
+  { id: "timeline", en: "Path", no: "Erfaring" },
+  { id: "contact", en: "Contact", no: "Kontakt" },
 ];
 
 export function SectionRail() {
-  const [active, setActive] = useState(0);
   const { language } = useLanguage();
   const reducedMotion = useReducedMotion();
-  const yTarget = useMotionValue(8.33);
-  const y = useSpring(yTarget, { stiffness: 115, damping: 20, mass: 1.1 });
-  const yPercent = useTransform(y, (value) => `${value}%`);
-
-  useEffect(() => { yTarget.set(8.33 + active * 16.667); }, [active, yTarget]);
+  const position = useMotionValue(100 / (sections.length * 2));
+  const smoothPosition = useSpring(position, { stiffness: 82, damping: 24, mass: 1.2 });
+  const top = useTransform(smoothPosition, (value) => `${value}%`);
+  const [active, setActive] = useState(0);
+  const [instantPosition, setInstantPosition] = useState(100 / (sections.length * 2));
 
   useEffect(() => {
-    let raf = 0;
+    let frame = 0;
     const update = () => {
-      raf = 0;
-      const threshold = window.innerHeight * 0.43;
-      let current = 0;
-      sections.forEach((section, index) => {
-        const element = document.getElementById(section.id);
-        if (element && element.getBoundingClientRect().top <= threshold) current = index;
+      frame = 0;
+      const anchor = window.scrollY + window.innerHeight * 0.43;
+      const offsets = sections.map(({ id }) => {
+        const element = document.getElementById(id);
+        return element ? element.getBoundingClientRect().top + window.scrollY : 0;
       });
-      setActive(current);
+      let index = 0;
+      while (index < offsets.length - 1 && anchor >= offsets[index + 1]) index++;
+      const next = offsets[index + 1];
+      const span = next === undefined ? window.innerHeight : Math.max(1, next - offsets[index]);
+      const fraction = next === undefined ? 0 : Math.max(0, Math.min(1, (anchor - offsets[index]) / span));
+      const value = ((index + 0.5 + fraction) / sections.length) * 100;
+      position.set(value);
+      setInstantPosition(value);
+      setActive(index);
     };
-    const schedule = () => { if (!raf) raf = requestAnimationFrame(update); };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
     update();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
-    return () => { window.removeEventListener("scroll", schedule); window.removeEventListener("resize", schedule); cancelAnimationFrame(raf); };
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      cancelAnimationFrame(frame);
+    };
+  }, [position]);
 
   return (
-    <nav className="section-rail" aria-label={language === "no" ? "Seksjoner på siden" : "Page sections"}>
-      <div className="section-rail__track" aria-hidden="true" />
-      <motion.div className="section-rail__gantry" style={reducedMotion ? { top: `${8.33 + active * 16.667}%` } : { top: yPercent }} aria-hidden="true">
-        <span className="section-rail__gantry-body"><i /><i /></span><span className="section-rail__gantry-tip" />
-      </motion.div>
+    <nav className="section-rail" aria-label={language === "no" ? "Seksjoner" : "Sections"}>
+      <span className="section-rail__thread" aria-hidden="true" />
+      <span className="section-rail__track" aria-hidden="true" />
       {sections.map((section, index) => (
-        <a key={section.id} href={`#${section.id}`} aria-label={language === "no" ? section.no : section.en} title={language === "no" ? section.no : section.en} aria-current={active === index ? "location" : undefined} className={`section-rail__stop ${active === index ? "is-active" : ""}`}>
-          <span className="section-rail__number">0{index + 1}</span><span className="section-rail__label">{language === "no" ? section.no : section.en}</span>
+        <a key={section.id} href={`#${section.id}`} className={`section-rail__stop${active === index ? " is-active" : ""}`} aria-current={active === index ? "location" : undefined}>
+          <span className="section-rail__number">{String(index + 1).padStart(2, "0")}</span>
+          <span className="section-rail__label">{language === "no" ? section.no : section.en}</span>
         </a>
       ))}
+      <motion.span className="section-rail__gantry" style={{ top: reducedMotion ? `${instantPosition}%` : top }} aria-hidden="true">
+        <span className="section-rail__gantry-body"><i /><i /></span>
+        <span className="section-rail__gantry-hotend" />
+        <span className="section-rail__gantry-nozzle" />
+      </motion.span>
     </nav>
   );
 }

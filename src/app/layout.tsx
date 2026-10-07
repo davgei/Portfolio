@@ -10,24 +10,24 @@ const publicUrl = "https://davgei.github.io/Portfolio";
 export const metadata: Metadata = {
   metadataBase: new URL(publicUrl),
   title: {
-    default: "David Geier | Robotics & Intelligent Systems",
-    template: "%s | David Geier"
+    default: "David Benedict Geier | AI & Robotics",
+    template: "%s | David Benedict Geier"
   },
-  description: "David Geier studies robotics and intelligent systems at the University of Oslo. Selected work in perception, learning, control and hardware.",
+  description: "David Benedict Geier studies robotics and intelligent systems at the University of Oslo. Selected work in applied AI, perception, control and physical systems.",
   alternates: { canonical: `${publicUrl}/` },
   icons: {
     icon: `${getBasePath()}/favicon.svg`
   },
   openGraph: {
-    title: "David Geier | Robotics & Intelligent Systems",
-    description: "Selected work in perception, learning, control and hardware.",
+    title: "David Benedict Geier | AI & Robotics",
+    description: "Selected work in applied AI, perception, control and physical systems.",
     type: "website",
-    images: [{ url: `${publicUrl}/images/social-preview.png`, width: 1200, height: 630, alt: "David Geier robotics portfolio" }]
+    images: [{ url: `${publicUrl}/images/social-preview.png`, width: 1200, height: 630, alt: "David Benedict Geier robotics portfolio" }]
   },
   twitter: {
     card: "summary_large_image",
-    title: "David Geier | Robotics & Intelligent Systems",
-    description: "Selected work in perception, learning, control and hardware.",
+    title: "David Benedict Geier | AI & Robotics",
+    description: "Selected work in applied AI, perception, control and physical systems.",
     images: [`${publicUrl}/images/social-preview.png`]
   }
 };

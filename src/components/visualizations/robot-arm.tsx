@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import Link from "next/link";
-import { Bone2D, Chain2D, V2 } from "ikts";
+import { Info } from "lucide-react";
+import { BaseboneConstraintType, Bone2D, Chain2D, V2 } from "ikts";
 import { skillClusters } from "@/data/skills";
 import { useLanguage } from "@/i18n/language-provider";
 import { useSound } from "@/hooks/use-sound";
@@ -127,23 +128,25 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
       const { width, height } = stage.getBoundingClientRect();
       if (width < 1 || height < 1) return;
       const compact = width < 680;
-      const scale = isSkills ? (compact ? Math.max(width, height * 0.63) : Math.max(width, height)) : Math.max(height, width * 0.72);
-      const base = new V2(width * (compact && isSkills ? 0.18 : isSkills ? 0.13 : compact ? 0.18 : 0.64), height * (isSkills ? 0.83 : compact ? 0.78 : 0.12));
+      const scale = isSkills ? (compact ? Math.max(width, height * 0.68) : Math.max(width, height)) : Math.max(height, width * 0.78);
+      const base = new V2(width * (compact && isSkills ? 0.18 : isSkills ? 0.13 : compact ? 0.73 : 0.64), height * (isSkills ? 0.83 : 0.12));
       geometry = {
         width, height,
-        first: scale * 0.32,
-        second: scale * 0.27,
+        first: scale * 0.23,
+        second: scale * 0.24,
         third: scale * 0.12,
-        maxExtension: compact && isSkills ? height * 0.33 : scale * (isSkills ? 0.2 : 0.29)
+        maxExtension: compact && isSkills ? height * 0.42 : scale * (isSkills ? 0.34 : 0.39)
       };
       chain = new Chain2D();
-      chain.addBone(new Bone2D(base, undefined, new V2(0.6, -0.8), geometry.first));
+      chain.addBone(new Bone2D(base, undefined, isSkills ? new V2(0.6, -0.8) : new V2(0.45, 0.9), geometry.first, 85, 85));
+      chain.setBaseboneConstraintType(BaseboneConstraintType.GLOBAL_ABSOLUTE);
+      chain.setBaseboneConstraintUV(isSkills ? new V2(0, -1) : new V2(0, 1));
       chain.addConsecutiveBone(new V2(0.8, -0.6), geometry.second, 180, 180);
       chain.addConsecutiveBone(new V2(1, 0), geometry.third, 180, 180);
       chain.setMaxIterationAttempts(20);
       desired = compact && isSkills
-        ? { x: width * 0.72, y: height * 0.48 }
-        : { x: width * (isSkills ? 0.64 : 0.8), y: height * (isSkills ? 0.31 : 0.62) };
+        ? { x: width * 0.75, y: 80 + 56 }
+        : { x: width * (isSkills ? 0.835 : 0.8), y: isSkills ? height * 0.16 + 48 : height * 0.62 };
       current = { ...desired };
       extension = 0;
       schedule();
@@ -225,10 +228,19 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
             <line x1={pose.joints[2].x} y1={pose.joints[2].y} x2={sleeve?.x} y2={sleeve?.y} stroke="#08090a" strokeWidth="35" strokeLinecap="round" />
             <line x1={pose.joints[2].x} y1={pose.joints[2].y} x2={sleeve?.x} y2={sleeve?.y} stroke="#6d797b" strokeWidth="25" strokeLinecap="round" />
             <line x1={pose.joints[2].x} y1={pose.joints[2].y} x2={sleeve?.x} y2={sleeve?.y} stroke="#eff1ed" strokeOpacity="0.35" strokeWidth="3" strokeLinecap="round" />
-            <path d={`M ${pose.joints[0].x - 50} ${pose.joints[0].y + 36} h 100 l 17 13 h -134 z`} fill="#111415" stroke="#606764" strokeWidth="2" />
+            {isSkills ? (
+              <path d={`M ${pose.joints[0].x - 50} ${pose.joints[0].y + 36} h 100 l 17 13 h -134 z`} fill="#111415" stroke="#606764" strokeWidth="2" />
+            ) : (
+              <g>
+                <rect x={pose.joints[0].x - 75} y="0" width="150" height="13" fill="#242c2c" stroke="#87928c" strokeWidth="2" />
+                <path d={`M ${pose.joints[0].x - 35} 13 V ${pose.joints[0].y - 24} H ${pose.joints[0].x + 35} V 13`} fill="#26302f" stroke="#a8b3ad" strokeWidth="3" />
+                <path d={`M ${pose.joints[0].x - 57} ${pose.joints[0].y - 29} H ${pose.joints[0].x + 57} L ${pose.joints[0].x + 43} ${pose.joints[0].y - 14} H ${pose.joints[0].x - 43} Z`} fill="#101716" stroke="#d8a545" strokeWidth="2" />
+              </g>
+            )}
             {pose.joints.slice(0, 3).map((point, index) => (
               <g key={index}>
-                <circle cx={point.x} cy={point.y} r={index === 0 ? 28 : 25} fill="#0a0c0d" stroke={index === 2 ? "#d8a545" : "#7c8787"} strokeWidth="3" />
+                <circle cx={point.x} cy={point.y} r={index === 0 ? 34 : 31} fill="none" stroke={index === 2 ? "#f0bc52" : "#8adce7"} strokeOpacity="0.22" strokeWidth="8" className="arm-joint-halo" />
+                <circle cx={point.x} cy={point.y} r={index === 0 ? 28 : 25} fill="#0a0c0d" stroke={index === 2 ? "#d8a545" : "#8ca7a9"} strokeWidth="3" className="arm-joint-ring" />
                 <circle cx={point.x} cy={point.y} r="15" fill="#424b4b" stroke="#d4d8d4" strokeWidth="2" />
                 <circle cx={point.x} cy={point.y} r="5" fill="#d8a545" />
               </g>
@@ -241,12 +253,14 @@ export function RobotArm({ variant = "hero" }: { variant?: "hero" | "skills" }) 
               <button
                 key={cluster.title}
                 type="button"
+                title={language === "no" ? `Vis ${cluster.titleNo}` : `Show ${cluster.title}`}
                 aria-pressed={selected === index}
                 onClick={(event) => { setSelected(index); aimAtButton(event.currentTarget); play("select"); }}
                 onPointerEnter={(event) => { if (event.pointerType === "mouse") aimAtButton(event.currentTarget, false); }}
                 className={`relative min-h-[112px] cursor-pointer border text-left backdrop-blur-md transition-colors md:pointer-events-auto md:absolute md:min-h-[96px] md:w-[23%] ${skillPositions[index]} ${selected === index ? "border-amber bg-ink/95 text-mist" : "border-line bg-ink/85 text-muted hover:border-mist/60 hover:bg-ink/95"}`}
               >
                 <span className="absolute left-3 top-3 font-mono text-[11px] text-amber sm:left-4 sm:top-4">0{index + 1}</span>
+                <Info size={14} className="absolute right-3 top-3 text-amber/80 sm:right-4 sm:top-4" aria-hidden="true" />
                 <span className="absolute bottom-3 left-3 right-3 text-sm font-semibold leading-5 text-mist sm:bottom-4 sm:left-4 sm:right-4 sm:text-base">{language === "no" ? cluster.titleNo : cluster.title}</span>
               </button>
             ))}

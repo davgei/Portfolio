@@ -9,6 +9,7 @@ import { InteractiveTimeline } from "@/components/timeline/interactive-timeline"
 import { ContactSection } from "@/components/layout/contact-section";
 import { AboutPreview } from "@/components/layout/about-preview";
 import { SectionRail } from "@/components/navigation/section-rail";
+import { EdgeRover } from "@/components/navigation/edge-rover";
 import { useLanguage } from "@/i18n/language-provider";
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
   return (
     <div className="home-page">
       <SectionRail />
+      <EdgeRover />
       <section id="top" className="hero" aria-labelledby="hero-title">
         <div className="hero-arm"><RobotArm /></div>
         <div className="container-wide hero-inner">
@@ -30,7 +32,7 @@ export default function Home() {
             <span className="hero-console__caption">/ {language === "no" ? "VELG DESTINASJON" : "SELECT DESTINATION"}</span>
             <a href="#projects">01 <strong>{language === "no" ? "Prosjekter" : "Work"}</strong><ArrowRight size={16} /></a>
             <a href="#about-preview">02 <strong>{language === "no" ? "Om meg" : "About"}</strong><ArrowRight size={16} /></a>
-            <a href="#systems">03 <strong>{language === "no" ? "Systemkart" : "Systems"}</strong><ArrowRight size={16} /></a>
+            <a href="#systems">03 <strong>{language === "no" ? "AI og systemer" : "AI & systems"}</strong><ArrowRight size={16} /></a>
           </div>
           <div className="hero-bottom"><span>{t.hero.sequence}</span><span>001 / 006</span></div>
         </div>
@@ -40,7 +42,7 @@ export default function Home() {
       <SkillConstellation />
       <InteractiveTimeline />
       <ContactSection />
-      <footer className="container-wide site-footer"><span>DAVID GEIER / 2026</span><a href="https://github.com/davgei" target="_blank" rel="noreferrer" aria-label="David Geier on GitHub"><Github size={17} /></a></footer>
+      <footer className="container-wide site-footer"><span>{language === "no" ? "NETTSIDE OG DESIGN AV" : "WEBSITE & DESIGN BY"} DAVID BENEDICT GEIER / 2026</span><a href="https://github.com/davgei" target="_blank" rel="noreferrer" aria-label="David Benedict Geier on GitHub"><Github size={17} /></a></footer>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Contact, FileText, FolderKanban, Home, UserRound } from "lucide-react";
+import { ArrowLeft, Contact, FileText, FolderKanban, Home, UserRound } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { LanguageSwitch } from "./language-switch";
 import { SoundToggle } from "./sound-toggle";
@@ -24,6 +24,7 @@ export function FloatingNav() {
 
   return (
     <header className="site-nav fixed inset-x-0 top-4 z-50 px-4">
+      {pathname !== "/" && <Link href="/" className="site-back"><ArrowLeft size={17} />{t.nav.home}</Link>}
       <nav
         aria-label={t.common.language === "Språk" ? "Hovednavigasjon" : "Primary navigation"}
         className="mx-auto flex w-fit max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full border border-line bg-ink/90 p-2 shadow-glow backdrop-blur-xl"
