@@ -30,8 +30,8 @@ export default function Home() {
           </div>
           <div className="hero-console" aria-label={t.common.exploreProjects}>
             <span className="hero-console__caption">/ {language === "no" ? "VELG DESTINASJON" : "SELECT DESTINATION"}</span>
-            <a href="#projects" onClick={() => play("navigate")}>01 <strong>{language === "no" ? "Prosjekter" : "Work"}</strong><ArrowRight size={16} /></a>
-            <a href="#about-preview" onClick={() => play("navigate")}>02 <strong>{language === "no" ? "Om meg" : "About"}</strong><ArrowRight size={16} /></a>
+            <a href="#about-preview" onClick={() => play("navigate")}>01 <strong>{language === "no" ? "Om meg" : "About"}</strong><ArrowRight size={16} /></a>
+            <a href="#projects" onClick={() => play("navigate")}>02 <strong>{language === "no" ? "Prosjekter" : "Work"}</strong><ArrowRight size={16} /></a>
             <a href="#systems" onClick={() => play("navigate")}>03 <strong>{language === "no" ? "AI og systemer" : "AI & systems"}</strong><ArrowRight size={16} /></a>
           </div>
           <div className="hero-bottom"><span>{t.hero.sequence}</span><span>001 / 006</span></div>
