@@ -127,6 +127,27 @@ export const projects: Project[] = [
     area: ["Hardware", "Perception", "Software"], technologies: ["Raspberry Pi", "360 camera", "GPS", "Python", "Data acquisition"],
     stages: ["Camera", "GPS", "Capture", "Dataset"], stagesNo: ["Kamera", "GPS", "Innsamling", "Datasett"],
     featured: false, accent: "gold"
+  },
+  {
+    slug: "road-segmentation-unet", index: "06", title: "Road segmentation with U-Net", titleNo: "Veisegmentering med U-Net",
+    subtitle: "Comparing convolutional models on KITTI road images", subtitleNo: "Sammenligning av konvolusjonsmodeller p\u00e5 KITTI-veibilder",
+    summary: "I trained a compact CNN baseline and a U-Net to segment roads in KITTI images, then compared their validation behaviour and pixel-level metrics.",
+    summaryNo: "Jeg trente en enkel CNN-baseline og en U-Net til \u00e5 segmentere vei i KITTI-bilder, og sammenlignet valideringsresultater og pikselbaserte m\u00e5ltall.",
+    context: "Autonomous systems need visual models that can distinguish traversable road from the surrounding scene. Pixel accuracy alone can be misleading when most pixels belong to the background.",
+    contextNo: "Autonome systemer trenger synsmodeller som skiller kj\u00f8rbar vei fra omgivelsene. Pikseln\u00f8yaktighet alene kan gi et misvisende bilde n\u00e5r bakgrunnen utgj\u00f8r de fleste pikslene.",
+    contribution: "For a TEK5040 assignment, I set up a data pipeline for KITTI road images and trained two binary-segmentation models: a simple convolutional baseline and a U-Net with skip connections. In my recorded runs, U-Net reduced loss by more than half and achieved about six percentage points higher pixel accuracy than the simple model.",
+    contributionNo: "I en TEK5040-oppgave satte jeg opp en datapipeline for KITTI road og trente to modeller for bin\u00e6r segmentering: en enkel konvolusjonsbaseline og en U-Net med skip-forbindelser. I kj\u00f8ringene mine reduserte U-Net tapet med mer enn halvparten og oppn\u00e5dde rundt seks prosentpoeng h\u00f8yere pikseln\u00f8yaktighet enn den enkle modellen.",
+    approach: "Images and road masks are resized to 256 x 256. Both models predict a road probability per pixel and are trained with binary cross-entropy and Adam. U-Net combines coarse context with higher-resolution features through skip connections.",
+    approachNo: "Bilder og veimasker skaleres til 256 x 256. Begge modellene predikerer veisannsynlighet for hver piksel og trenes med bin\u00e6rt kryssentropitap og Adam. U-Net kombinerer kontekst fra en encoder-decoder med mer detaljerte trekk gjennom skip-forbindelser.",
+    outcome: "U-Net performed better than the compact baseline in the recorded validation runs. The exercise also exposed a metric pitfall: a model can score well on pixel accuracy by predicting the dominant background, so the score should be read alongside road-sensitive measures such as IoU and recall.",
+    outcomeNo: "U-Net gjorde det bedre enn den kompakte baselinen i de registrerte valideringskj\u00f8ringene. Arbeidet viste ogs\u00e5 en fallgruve ved m\u00e5ling: en modell kan f\u00e5 h\u00f8y pikseln\u00f8yaktighet ved \u00e5 predikere den dominerende bakgrunnen, s\u00e5 resultatet b\u00f8r vurderes sammen med m\u00e5ltall som IoU og recall.",
+    next: "Add reproducible evaluation plots for IoU and recall, plus a small set of approved input, prediction and ground-truth examples.",
+    nextNo: "Legg til reproduserbare IoU- og recall-plott, samt et lite utvalg godkjente eksempler med input, prediksjon og fasitmaske.",
+    area: ["Perception", "Learning", "Software"],
+    technologies: ["Python", "TensorFlow", "CNN", "U-Net", "KITTI road", "Binary segmentation"],
+    stages: ["KITTI data", "Preprocess", "CNN baseline", "U-Net training", "Validation"],
+    stagesNo: ["KITTI-data", "Forbehandling", "CNN-baseline", "U-Net-trening", "Validering"],
+    date: "2026", featured: true, accent: "cyan"
   }
 ];
 

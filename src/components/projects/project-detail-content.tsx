@@ -8,6 +8,10 @@ import { useLanguage } from "@/i18n/language-provider";
 import { ProjectVisual } from "./project-visual";
 
 const stageNotes: Record<string, [string[], string[]]> = {
+  "road-segmentation-unet": [
+    ["Load paired KITTI road images and pixel masks.", "Resize images and masks to a consistent 256 x 256 input.", "Train a compact convolutional baseline for binary masks.", "Train a U-Net whose skip connections retain spatial detail.", "Compare validation loss and pixel accuracy while accounting for background imbalance."],
+    ["Last inn KITTI-veibilder med tilh\u00f8rende pikselmasker.", "Skaler bilder og masker til en felles input p\u00e5 256 x 256.", "Tren en kompakt konvolusjonsbaseline for bin\u00e6re masker.", "Tren en U-Net der skip-forbindelser bevarer romlige detaljer.", "Sammenlign valideringstap og pikseln\u00f8yaktighet, og ta hensyn til ubalanse mellom vei og bakgrunn."]
+  ],
   "waste-site-assessment": [
     ["Collect imagery and spatial context in the field.", "Find candidate objects in images.", "Check candidates against spatial information.", "Keep a human decision point in the loop.", "Present findings for inspection."],
     ["Samle inn bilder og romlig kontekst i felt.", "Finn kandidatobjekter i bilder.", "Sjekk kandidater mot romlig informasjon.", "Behold et menneskelig vurderingspunkt.", "Presenter funn for inspeksjon."]

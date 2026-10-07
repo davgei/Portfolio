@@ -2,6 +2,7 @@ import type { Project } from "@/data/projects";
 
 export function ProjectVisual({ project, compact = false }: { project: Project; compact?: boolean }) {
   const label = project.slug === "waste-site-assessment" ? "2D / 3D PERCEPTION" :
+    project.slug === "road-segmentation-unet" ? "KITTI / PIXEL SEGMENTATION" :
     project.slug === "ppo-autonomous-driving" ? "POLICY / SIMULATION" :
     project.slug === "ros2-robot-control" ? "STATE / FEEDBACK" :
     project.slug === "mechatronic-prototyping" ? "PART / ASSEMBLY" : "SENSOR / LOCATION";
@@ -29,6 +30,25 @@ export function ProjectVisual({ project, compact = false }: { project: Project; 
           <circle cx="615" cy="243" r="8" fill="#e8bb62" />
           <text x="116" y="406" fill="#aebbb5" fontSize="13" fontFamily="monospace">IMAGE CANDIDATES</text>
           <text x="483" y="406" fill="#aebbb5" fontSize="13" fontFamily="monospace">SPATIAL CHECK</text>
+        </svg>
+      )}
+      {project.slug === "road-segmentation-unet" && (
+        <svg viewBox="0 0 800 500" className="project-visual__drawing" aria-hidden="true">
+          <defs><linearGradient id="segRoad" x1="0" x2="0" y1="1" y2="0"><stop stopColor="#172c34"/><stop offset="1" stopColor="#526d73"/></linearGradient></defs>
+          <path d="M110 124h260v246H110z" fill="#263438" stroke="#6aaab3" strokeWidth="2" />
+          <path d="M110 278l52-55 44 19 54-81 38 34 62-51v126l-33 47H110z" fill="#607474" opacity=".8" />
+          <path d="M159 370l69-144 31-42 32 43 69 143" fill="url(#segRoad)" stroke="#b9d7d4" strokeWidth="2" />
+          <path d="M228 370l31-144 32 0 31 144" fill="none" stroke="#e5bd67" strokeWidth="2" strokeDasharray="8 10" />
+          <path d="M390 245h72m-12-12 12 12-12 12" fill="none" stroke="#c3d9d4" strokeWidth="3" />
+          <g transform="translate(485 118)">
+            <rect width="205" height="247" fill="#17262b" stroke="#69c2cb" strokeWidth="2" />
+            <path d="M0 82h205M0 164h205M68 0v247M137 0v247" stroke="#8babb0" opacity=".35" />
+            <path d="M65 247l33-86 7-43 8 43 34 86z" fill="#e3b95e" opacity=".86" />
+            <path d="M78 247l23-83 4-35 7 35 24 83" fill="none" stroke="#fff0c4" strokeWidth="2" />
+          </g>
+          <text x="112" y="402" fill="#c4d2ce" fontSize="13" fontFamily="monospace">RGB INPUT</text>
+          <text x="485" y="402" fill="#c4d2ce" fontSize="13" fontFamily="monospace">PREDICTED ROAD MASK</text>
+          <text x="438" y="94" fill="#80d2d7" fontSize="12" fontFamily="monospace">U-NET</text>
         </svg>
       )}
       {project.slug === "ppo-autonomous-driving" && (
