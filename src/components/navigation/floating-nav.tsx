@@ -14,7 +14,7 @@ const navItems = [
   { href: "/projects", key: "projects", icon: FolderKanban },
   { href: "/about", key: "about", icon: UserRound },
   { href: "/cv", key: "cv", icon: FileText },
-  { href: "/#contact", key: "contact", icon: Contact }
+  { href: "/contact", key: "contact", icon: Contact }
 ] as const;
 
 export function FloatingNav() {
@@ -32,7 +32,7 @@ export function FloatingNav() {
         <div className="hidden items-center gap-1 sm:flex">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const active = item.href === "/" ? pathname === "/" : item.key === "contact" ? false : pathname.startsWith(item.href);
+            const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             const label = t.nav[item.key];
 
             return (
@@ -60,7 +60,7 @@ export function FloatingNav() {
           {navItems.map((item) => {
             const Icon = item.icon;
             const label = t.nav[item.key];
-            const active = item.href === "/" ? pathname === "/" : item.key === "contact" ? false : pathname.startsWith(item.href);
+            const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
               <Link key={item.href} href={item.href} onClick={() => play("navigate")} className={cn("grid size-9 place-items-center rounded-full text-muted", active && "bg-white/10 text-mist")} aria-label={label} title={label}>
                 <Icon size={17} />
