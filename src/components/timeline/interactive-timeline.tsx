@@ -9,6 +9,7 @@ import { useLanguage } from "@/i18n/language-provider";
 import { useSound } from "@/hooks/use-sound";
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+const carriageSpring = { stiffness: 90, damping: 2 * Math.sqrt(90 * 1.25), mass: 1.25 };
 
 export function InteractiveTimeline() {
   const [active, setActive] = useState(3);
@@ -16,8 +17,8 @@ export function InteractiveTimeline() {
   const trackRef = useRef<HTMLDivElement>(null);
   const targetX = useMotionValue(0);
   const targetY = useMotionValue(0);
-  const x = useSpring(targetX, { stiffness: 76, damping: 20, mass: 1.45 });
-  const y = useSpring(targetY, { stiffness: 76, damping: 20, mass: 1.45 });
+  const x = useSpring(targetX, carriageSpring);
+  const y = useSpring(targetY, carriageSpring);
   const boundedX = useTransform(x, (value) => clamp(value, 20, Math.max(20, (trackRef.current?.clientWidth ?? 40) - 20)));
   const boundedY = useTransform(y, (value) => clamp(value, 15, Math.max(15, (trackRef.current?.clientHeight ?? 30) - 15)));
   const reducedMotion = useReducedMotion();
