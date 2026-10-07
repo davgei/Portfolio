@@ -59,11 +59,15 @@ export function ProjectDetailContent({ project }: { project: Project }) {
       <section className="case-system section-block">
         <div className="container-wide">
           <div className="section-heading"><div><p className="section-index">/ SYSTEM</p><h2>{t.common.projectApproach}</h2></div><span className="system-disclaimer">{t.common.conceptual}</span></div>
-          <div className="system-stages" role="group" aria-label={t.common.projectApproach}>
-            {stages.map((stage, index) => <button key={stage} type="button" className={activeStage === index ? "system-stage is-active" : "system-stage"} aria-pressed={activeStage === index} onClick={() => setActiveStage(index)}><span>0{index + 1}</span><strong>{stage}</strong><ArrowRight size={17} aria-hidden="true" /></button>)}
+          <div className="system-body">
+            <div className="system-stages" role="group" aria-label={t.common.projectApproach}>
+              {stages.map((stage, index) => <button key={stage} type="button" className={activeStage === index ? "system-stage is-active" : "system-stage"} aria-pressed={activeStage === index} onClick={() => setActiveStage(index)}><span>0{index + 1}</span><strong>{stage}</strong><ArrowRight size={17} aria-hidden="true" /></button>)}
+            </div>
+            <div className="system-explanation">
+              <div className="system-readout" aria-live="polite"><span>0{activeStage + 1} / 0{stages.length}</span><p>{notes[activeStage]}</p></div>
+              <p className="case-approach">{language === "no" ? project.approachNo : project.approach}</p>
+            </div>
           </div>
-          <div className="system-readout" aria-live="polite"><span>0{activeStage + 1} / 0{stages.length}</span><p>{notes[activeStage]}</p></div>
-          <p className="case-approach">{language === "no" ? project.approachNo : project.approach}</p>
         </div>
       </section>
 

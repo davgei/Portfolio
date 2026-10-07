@@ -566,3 +566,86 @@ main { overflow: clip; }
   .timeline-number { top: 11px; right: 10px; }
   .skill-detail__description { font-size: 16px; }
 }
+
+/* Editorial project layouts keep the work and its explanation in the same view. */
+.home-page .featured-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(28px, 3vw, 46px); }
+.home-page .project-card { grid-column: span 6; }
+.home-page .project-card:first-child { grid-column: span 7; }
+.home-page .project-card:nth-child(2) { grid-column: span 5; }
+.home-page .project-visual { height: clamp(240px, 25vw, 370px); min-height: 0; aspect-ratio: auto; }
+.home-page .project-card:nth-child(2) .project-visual { height: clamp(240px, 25vw, 370px); }
+.project-card p { font-size: 17px; line-height: 1.55; }
+.project-card h3 { font-size: clamp(29px, 3vw, 38px); }
+
+.project-index .project-card--large .project-card__link { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); align-items: center; gap: clamp(28px, 4vw, 64px); }
+.project-index .project-card--large .project-visual { height: clamp(310px, 34vw, 480px); min-height: 0; aspect-ratio: auto; }
+.project-index .project-card--large .project-card__body { padding-top: 0; }
+.project-index .project-card:not(.project-card--large) .project-visual { height: clamp(235px, 27vw, 350px); min-height: 0; aspect-ratio: auto; }
+
+.project-detail-hero { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); align-items: center; gap: clamp(34px, 5vw, 86px); padding-block: 96px 82px; }
+.project-detail-intro { min-width: 0; padding-bottom: 0; }
+.project-detail-hero h1 { font-size: clamp(48px, 5vw, 78px); overflow-wrap: anywhere; }
+.project-detail-summary { font-size: 18px; }
+.project-detail-hero .project-visual { height: clamp(340px, 33vw, 490px); min-height: 0; aspect-ratio: auto; }
+.case-narrative.container-readable { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(30px, 5vw, 85px); width: min(100% - 3rem, 1300px); }
+.case-chapter { grid-template-columns: 50px minmax(0, 1fr); gap: 14px; padding-bottom: 20px; }
+.case-chapter p { font-size: 18px; line-height: 1.65; }
+.case-narrative--end { padding-top: 70px; }
+.system-body { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr); gap: clamp(34px, 5vw, 80px); align-items: start; }
+.system-stages { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.system-stage { min-height: 125px; border-bottom: 1px solid rgba(255,255,255,.16); }
+.system-stage:nth-child(3n) { border-right: 0; }
+.system-stage:nth-last-child(-n+2) { border-bottom: 0; }
+.system-readout { grid-template-columns: 65px minmax(0, 1fr); border-top: 2px solid #d8a545; }
+.system-readout p { line-height: 1.45; }
+.case-approach { margin-top: 22px; font-size: 17px; }
+
+.about-hero { padding-block: 100px 75px; }
+.about-hero__grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr); align-items: center; gap: clamp(42px, 7vw, 110px); margin-top: 25px; }
+.about-hero h1 { max-width: 880px; margin: 0 0 32px; font-size: clamp(52px, 5vw, 76px); }
+.about-hero__copy > p { max-width: 760px; margin: 0; color: #d2ddd4; font-size: 19px; line-height: 1.65; }
+.about-page__portrait { width: 100%; max-width: 390px; aspect-ratio: 1 / 1; justify-self: end; }
+.about-story { display: block; padding-block: 70px 85px; }
+.about-story__heading { margin-bottom: 32px; }
+.about-story__text { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(30px, 6vw, 90px); }
+.about-story__text p { max-width: 680px; margin: 0; font-size: 18px; line-height: 1.7; }
+
+@media (max-width: 1000px) {
+  .home-page .project-card:first-child, .home-page .project-card:nth-child(2), .home-page .project-card { grid-column: span 6; }
+  .project-detail-hero { grid-template-columns: 1fr; gap: 30px; }
+  .project-detail-hero .project-visual { height: clamp(300px, 46vw, 420px); }
+  .system-body { grid-template-columns: 1fr; gap: 24px; }
+  .about-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(230px, .65fr); }
+}
+
+@media (max-width: 640px) {
+  .home-page .project-card:first-child, .home-page .project-card:nth-child(2), .home-page .project-card { grid-column: 1 / -1; }
+  .home-page .project-visual, .home-page .project-card:nth-child(2) .project-visual, .project-index .project-card:not(.project-card--large) .project-visual { height: clamp(205px, 61vw, 275px); }
+  .project-index .project-card--large .project-card__link { grid-template-columns: 1fr; gap: 0; }
+  .project-index .project-card--large .project-visual { height: clamp(205px, 61vw, 275px); }
+  .project-index .project-card--large .project-card__body { padding-top: 17px; }
+  .project-card p { font-size: 16px; }
+  .project-detail-hero { padding-block: 88px 54px; }
+  .project-detail-hero h1 { font-size: clamp(40px, 10vw, 52px); }
+  .project-detail-hero .project-visual { height: clamp(210px, 65vw, 295px); }
+  .project-detail-summary { font-size: 16px; }
+  .case-narrative.container-readable { grid-template-columns: 1fr; gap: 8px; width: min(100% - 2rem, 880px); padding-bottom: 58px; }
+  .case-chapter { grid-template-columns: 38px minmax(0, 1fr); }
+  .case-chapter p { font-size: 16px; }
+  .case-narrative--end { padding-top: 55px; }
+  .system-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .system-stage:nth-child(3n) { border-right: 1px solid rgba(255,255,255,.16); }
+  .system-stage:nth-child(even) { border-right: 0; }
+  .system-stage:nth-last-child(2) { border-bottom: 1px solid rgba(255,255,255,.16); }
+  .system-stage:last-child { border-right: 0; }
+  .about-hero { padding-block: 95px 55px; }
+  .about-hero__grid { grid-template-columns: 1fr; gap: 26px; }
+  .about-hero h1 { margin-bottom: 20px; font-size: clamp(38px, 10vw, 52px); }
+  .about-hero__copy > p { font-size: 16px; }
+  .about-page__portrait { width: min(58vw, 210px); justify-self: start; }
+  .about-story__text { grid-template-columns: 1fr; gap: 20px; }
+  .about-story__text p { font-size: 16px; }
+  .about-preview__photo { width: min(50vw, 185px); }
+  .about-preview__copy > p:not(.section-index) { font-size: 16px; }
+  .home-page > .section-block, .home-page > section.section-block { padding-block: 82px; }
+}

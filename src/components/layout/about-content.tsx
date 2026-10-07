@@ -15,9 +15,11 @@ export function AboutContent() {
     <>
       <section className="container-wide about-hero">
         <p className="section-index">/ ABOUT · DAVID BENEDICT GEIER</p>
-        <h1>{t.about.statement}</h1>
-        <div className="about-hero__lower">
-          <p>{no ? "Jeg studerer informatikk: robotikk og intelligente systemer ved Universitetet i Oslo. Det som interesserer meg mest, er hvordan data, AI, programvare og mekanikk kan bli ett nyttig system." : "I study Informatics: Robotics and Intelligent Systems at the University of Oslo. What interests me most is how data, AI, software and mechanics can become one useful system."}</p>
+        <div className="about-hero__grid">
+          <div className="about-hero__copy">
+            <h1>{t.about.statement}</h1>
+            <p>{no ? "Jeg studerer informatikk: robotikk og intelligente systemer ved Universitetet i Oslo. Det som interesserer meg mest, er hvordan data, AI, programvare og mekanikk kan bli ett nyttig system." : "I study Informatics: Robotics and Intelligent Systems at the University of Oslo. What interests me most is how data, AI, software and mechanics can become one useful system."}</p>
+          </div>
           <Image className="about-page__portrait" src={`${getBasePath()}/images/about/david-geier.jpeg`} alt={no ? "Portrett av David Benedict Geier" : "Portrait of David Benedict Geier"} width={300} height={296} priority />
         </div>
       </section>
